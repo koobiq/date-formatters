@@ -42,3 +42,4 @@ Thumbs.db
 /.husky/_
 
 .nx/cache
+.nx/workspace-data

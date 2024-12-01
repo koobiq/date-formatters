@@ -6,7 +6,8 @@ import {
     Duration,
     DurationObjectUnits,
     Interval,
-    LocaleOptions, Settings,
+    LocaleOptions,
+    Settings,
     SystemZone
 } from 'luxon';
 

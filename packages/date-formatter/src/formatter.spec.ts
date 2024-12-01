@@ -102,7 +102,7 @@ describe('DateFormatter', () => {
         beforeEach(() => {
             adapter = new LuxonDateAdapter(defaultLocale);
             formatter = new DateFormatter(adapter, defaultLocale);
-        })
+        });
 
         afterEach(() => {
             Settings.defaultZone = new SystemZone();
@@ -127,11 +127,11 @@ describe('DateFormatter', () => {
                 hour: 12,
                 minute: 34,
                 second: 22,
-                millisecond: 123,
+                millisecond: 123
             }).setZone('UTC+3', { keepLocalTime: true });
 
             expect(date1.toISO()).toMatchSnapshot('ISO 8601-compliant string from Luxon');
             expect(formatter.absoluteLongDateTime(date1)).toMatchSnapshot();
         });
-    })
+    });
 });
