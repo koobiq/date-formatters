@@ -1,0 +1,36 @@
+{
+    "extends": "nx/presets/npm.json",
+    "$schema": "./node_modules/nx/schemas/nx-schema.json",
+    "targetDefaults": {
+        "@nx/jest:jest": {
+            "inputs": ["default", "^default", "{workspaceRoot}/jest.preset.js"],
+            "cache": true,
+            "options": {
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "codeCoverage": true
+                }
+            }
+        },
+        "@nx/eslint:lint": {
+            "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
+            "cache": true
+        }
+    },
+    "release": {
+        "releaseTagPattern": "{version}"
+    },
+    "defaultBase": "master",
+    "useInferencePlugins": false,
+    "plugins": [
+        {
+            "plugin": "@nx/rollup/plugin",
+            "options": {
+                "buildTargetName": "build"
+            }
+        }
+    ]
+}

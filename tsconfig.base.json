@@ -1,0 +1,39 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@koobiq/date-adapter": [
+        "packages/date-adapter/src/index.ts"
+      ],
+      "@koobiq/date-formatter": [
+        "packages/date-formatter/src/index.ts"
+      ],
+      "@koobiq/luxon-date-adapter": [
+        "packages/luxon-date-adapter/src/index.ts"
+      ],
+      "@koobiq/moment-date-adapter": [
+        "packages/moment-date-adapter/src/index.ts"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
+}

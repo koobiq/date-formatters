@@ -1,0 +1,10 @@
+{
+    "name": "@koobiq/luxon-date-adapter",
+    "description": "Luxon Date Adapter",
+    "version": "3.1.4",
+    "license": "MIT",
+    "peerDependencies": {
+        "@koobiq/date-adapter": "^3.0.0",
+        "luxon": "^3.2.1"
+    }
+}
