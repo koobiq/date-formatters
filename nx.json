@@ -16,12 +16,14 @@
             }
         },
         "@nx/eslint:lint": {
-            "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
+            "inputs": ["default", "^default", "{workspaceRoot}/eslint.config.mjs"],
             "cache": true
         }
     },
     "release": {
-        "releaseTagPattern": "{version}"
+        "releaseTag": {
+            "pattern": "{version}"
+        }
     },
     "defaultBase": "main",
     "useInferencePlugins": false,
