@@ -32,6 +32,6 @@ export default [
         rules: {}
     },
     {
-        ignores: ['jest.config.js', '**.spec.ts']
+        ignores: ['jest.config.js', '**/*.spec.ts']
     }
 ];

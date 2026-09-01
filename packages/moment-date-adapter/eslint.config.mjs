@@ -21,6 +21,15 @@ export default [
         rules: {}
     },
     {
+        files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
+        rules: {
+            // parse, deserialize and isDateInstance take arbitrary untrusted input and narrow it,
+            // and the abstract DateAdapter they implement declares them with `any`. The other five
+            // packages disable the rule for the same reason; this one had lost the override.
+            '@typescript-eslint/no-explicit-any': 'off'
+        }
+    },
+    {
         files: ['**/*.ts', '**/*.tsx'],
         // Override or add rules here
         rules: {}
@@ -31,6 +40,6 @@ export default [
         rules: {}
     },
     {
-        ignores: ['jest.config.js', '**.spec.ts']
+        ignores: ['jest.config.js', '**/*.spec.ts']
     }
 ];
