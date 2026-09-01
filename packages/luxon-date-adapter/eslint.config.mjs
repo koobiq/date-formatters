@@ -3,6 +3,10 @@ import baseConfig from '../../eslint.config.mjs';
 export default [
     ...baseConfig,
     {
+        // parserOptions.project only applies to TypeScript sources. Without this the typed parser
+        // is also used for eslint.config.mjs, which no tsconfig includes, and ESLint fails with
+        // "The file was not found in any of the provided project(s)".
+        files: ['**/*.ts', '**/*.tsx'],
         languageOptions: {
             parserOptions: {
                 ecmaVersion: 2020,

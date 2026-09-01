@@ -63,6 +63,7 @@ export default [
             '.lintstagedrc.js',
             'jest.preset.js',
             '**/*.config.js',
+            '**/*.config.mjs',
             '**/*.d.ts'
         ]
     }
