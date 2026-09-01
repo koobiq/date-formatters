@@ -47,6 +47,7 @@
         "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
         "@koobiq/cli": "17.9.0",
         "@nrwl/eslint-plugin-nx": "19.1.1",
+        "@nx/eslint-plugin": "19.1.1",
         "@nx/eslint": "19.1.1",
         "@nx/jest": "19.1.1",
         "@nx/js": "19.1.1",
