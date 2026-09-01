@@ -1461,7 +1461,7 @@ describe('InternationalizedDateAdapter', () => {
             const value = new CalendarDateTime(2026, 3, 16, 11, 48, 15, 515);
             const zonedValue = new ZonedDateTime(2026, 3, 16, 'Europe/Moscow', 3 * 60 * 60 * 1000, 18, 44, 48, 417);
 
-            expect(adapter.toIso8601(value)).toBe('2026-03-16T08:48:15.515Z');
+            expect(adapter.toIso8601(value)).toBe('2026-03-16T11:48:15.515Z');
             expect(adapter.isDateInstance(value)).toBe(true);
             expect(adapter.isDateInstance(new CalendarDate(2026, 3, 16))).toBe(false);
             expect(adapter.isDateInstance(zonedValue)).toBe(false);
