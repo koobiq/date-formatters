@@ -37,6 +37,10 @@ updates:
       # majors: @typescript-eslint 8 needs eslint ^8.57 || ^9, which the same peer range allows.
       - dependency-name: 'eslint'
         update-types: ['version-update:semver-major']
+      # Held back by the same @nx/eslint-plugin peer, which asks for eslint-config-prettier ^9.0.0
+      # and only widens to ^10.0.0 in Nx 20. Bumping it alone fails the install the same way.
+      - dependency-name: 'eslint-config-prettier'
+        update-types: ['version-update:semver-major']
     groups:
       # Security fixes arrive as a single pull request rather than one per advisory.
       security:
