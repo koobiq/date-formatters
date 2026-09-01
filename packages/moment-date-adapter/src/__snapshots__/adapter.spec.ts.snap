@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`MomentDateAdapter findDateFormat = true addCalendarUnits when called with DurationObjectUnits object should handle object with single unit 1`] = `"2024-01-15T15:30:00.000Z"`;
 
