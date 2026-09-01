@@ -36,11 +36,11 @@ describe('MomentDateAdapter', () => {
         const legacyLocaleIds = ['ru', 'en'];
 
         [...predefinedLocales, ...legacyLocaleIds].forEach((localeId) => {
-            expect(() => adapter.setLocale(localeId)).not.toThrowError();
+            expect(() => adapter.setLocale(localeId)).not.toThrow();
         });
 
         ['ar-AE', 'jp', 'fr', 'ja', 'ja-JP'].forEach((localeId) => {
-            expect(() => adapter.setLocale(localeId)).toThrowError();
+            expect(() => adapter.setLocale(localeId)).toThrow();
         });
     });
 
@@ -308,7 +308,7 @@ describe('MomentDateAdapter', () => {
     });
 
     it('should throw when attempting to format invalid date', () => {
-        expect(() => adapter.format(moment(NaN), 'MM/DD/YYYY')).toThrowError(
+        expect(() => adapter.format(moment(NaN), 'MM/DD/YYYY')).toThrow(
             /MomentDateAdapter: Cannot format invalid date\./
         );
     });
@@ -592,12 +592,12 @@ describe('MomentDateAdapter findDateFormat = true', () => {
 
         supportedLocalesForFindFormat.forEach((localeId) => {
             adapter.setLocale(localeId);
-            expect(() => adapter.parse('03/06/2019', '')).not.toThrowError();
+            expect(() => adapter.parse('03/06/2019', '')).not.toThrow();
         });
 
         notSupportedLocalesForFindFormat.forEach((localeId) => {
             adapter.setLocale(localeId);
-            expect(() => adapter.parse('03/06/2019', '')).toThrowError();
+            expect(() => adapter.parse('03/06/2019', '')).toThrow();
         });
     });
 

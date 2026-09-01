@@ -340,7 +340,7 @@ describe('LuxonDateAdapter', () => {
     });
 
     it('should throw when attempting to format invalid date', () => {
-        expect(() => adapter.format(DateTime.local(2001, 0, 0), 'L/d/yyyy')).toThrowError(
+        expect(() => adapter.format(DateTime.local(2001, 0, 0), 'L/d/yyyy')).toThrow(
             'DateTime: Cannot format invalid date.'
         );
     });

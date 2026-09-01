@@ -65,11 +65,7 @@ export class LuxonDateAdapter extends DateAdapter<DateTime> {
         };
 
         const localeData: any = {
-            dates: Array.from(
-                { length: 31 },
-                // eslint-disable-next-line @typescript-eslint/naming-convention
-                (_, i) => this.createDate(2000, 0, i + 1).toFormat('d')
-            ),
+            dates: Array.from({ length: 31 }, (_, i) => this.createDate(2000, 0, i + 1).toFormat('d')),
             firstDayOfWeek: this.config.firstDayOfWeek,
 
             longMonths: this.config.monthNames.long,
@@ -287,7 +283,6 @@ export class LuxonDateAdapter extends DateAdapter<DateTime> {
     /** https://www.ietf.org/rfc/rfc3339.txt */
     override deserialize(value: any): DateTime | null {
         if (this.isDateInstance(value)) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
             return value.setLocale(this.locale);
         }
 

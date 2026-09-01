@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`DateFormatter core should return formatted date in the same timezone as initialized 1`] = `"July 22, 2022, 12:34"`;
 
