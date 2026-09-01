@@ -1,0 +1,10 @@
+{
+    "name": "@koobiq/internationalized-date-adapter",
+    "description": "Internationalized Date Adapter",
+    "version": "3.5.1",
+    "license": "MIT",
+    "peerDependencies": {
+        "@internationalized/date": "^3.8.2",
+        "@koobiq/date-adapter": "^3.0.0"
+    }
+}

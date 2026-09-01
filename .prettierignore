@@ -1,0 +1,12 @@
+# Add files here to ignore them from prettier formatting
+
+/dist
+/coverage
+/node_modules
+LICENSE
+
+# Jest snapshots: prettier cannot infer a parser for .snap
+**/__snapshots__
+
+/.nx/cache
+/.nx/workspace-data

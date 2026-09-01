@@ -1,0 +1,8 @@
+/node_modules
+/dist
+.prettierrc.js
+.commitlintrc.js
+.lintstagedrc.js
+jest.preset.js
+**/*.config.js
+**/*.d.ts

@@ -1,0 +1,6 @@
+# Deliberately narrow. `* text=auto` is tempting but would renormalize every tracked file in a
+# single commit, so line endings are left alone except where they are load-bearing.
+
+# Git already detects these as binary; declaring it means no future filter or `text=auto` change
+# can start mangling them.
+*.png binary

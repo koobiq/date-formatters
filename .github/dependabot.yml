@@ -1,0 +1,71 @@
+version: 2
+updates:
+    - package-ecosystem: 'github-actions'
+      directory: '/'
+      schedule:
+          interval: 'monthly'
+      groups:
+          github-actions:
+              patterns:
+                  - '*'
+
+    - package-ecosystem: 'npm'
+      directory: '/'
+      schedule:
+          interval: 'weekly'
+      commit-message:
+          # Feeds the `dependencies` label in workflows/pr-label.yml, which feeds the release notes.
+          prefix: 'chore'
+          prefix-development: 'chore'
+          include: 'scope'
+      ignore:
+          # Majors here have to be upgraded deliberately: the Nx packages move as one set together
+          # with the `nx` runtime, and TypeScript is pinned to what the installed Nx generators
+          # support. Everything else gets major updates.
+          - dependency-name: 'nx'
+            update-types: ['version-update:semver-major']
+          - dependency-name: '@nx/*'
+            update-types: ['version-update:semver-major']
+          - dependency-name: '@nrwl/*'
+            update-types: ['version-update:semver-major']
+          - dependency-name: 'typescript'
+            update-types: ['version-update:semver-major']
+      groups:
+          # Security fixes arrive as a single pull request rather than one per advisory.
+          security:
+              applies-to: security-updates
+              patterns:
+                  - '*'
+          nx:
+              patterns:
+                  - 'nx'
+                  - '@nx/*'
+                  - '@nrwl/*'
+          eslint:
+              patterns:
+                  - 'eslint*'
+                  # `eslint*` does not match scoped names, so the scopes are listed separately.
+                  - '@typescript-eslint/*'
+          prettier:
+              patterns:
+                  - 'prettier*'
+                  - 'pretty-quick'
+                  - '@ianvs/prettier-plugin-sort-imports'
+          commitlint:
+              patterns:
+                  - '@commitlint/*'
+          jest:
+              patterns:
+                  - 'jest*'
+                  - '@types/jest'
+                  - 'ts-jest'
+          swc:
+              patterns:
+                  - '@swc/*'
+          luxon:
+              patterns:
+                  - 'luxon'
+                  - '@types/luxon'
+          koobiq:
+              patterns:
+                  - '@koobiq/*'
