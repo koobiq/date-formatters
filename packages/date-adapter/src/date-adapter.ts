@@ -1,25 +1,8 @@
 export type DateUnit =
-    | 'year'
-    | 'quarter'
-    | 'month'
-    | 'week'
-    | 'isoWeek'
-    | 'day'
-    | 'hour'
-    | 'minute'
-    | 'second'
-    | 'millisecond';
+    'year' | 'quarter' | 'month' | 'week' | 'isoWeek' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond';
 
 export type DurationUnit =
-    | 'years'
-    | 'quarters'
-    | 'months'
-    | 'weeks'
-    | 'days'
-    | 'hours'
-    | 'minutes'
-    | 'seconds'
-    | 'milliseconds';
+    'years' | 'quarters' | 'months' | 'weeks' | 'days' | 'hours' | 'minutes' | 'seconds' | 'milliseconds';
 
 export interface DurationObjectUnits {
     years?: number;
