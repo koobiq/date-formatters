@@ -1,71 +1,78 @@
 version: 2
 updates:
-    - package-ecosystem: 'github-actions'
-      directory: '/'
-      schedule:
-          interval: 'monthly'
-      groups:
-          github-actions:
-              patterns:
-                  - '*'
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'monthly'
+    groups:
+      github-actions:
+        patterns:
+          - '*'
 
-    - package-ecosystem: 'npm'
-      directory: '/'
-      schedule:
-          interval: 'weekly'
-      commit-message:
-          # Feeds the `dependencies` label in workflows/pr-label.yml, which feeds the release notes.
-          prefix: 'chore'
-          prefix-development: 'chore'
-          include: 'scope'
-      ignore:
-          # Majors here have to be upgraded deliberately: the Nx packages move as one set together
-          # with the `nx` runtime, and TypeScript is pinned to what the installed Nx generators
-          # support. Everything else gets major updates.
-          - dependency-name: 'nx'
-            update-types: ['version-update:semver-major']
-          - dependency-name: '@nx/*'
-            update-types: ['version-update:semver-major']
-          - dependency-name: '@nrwl/*'
-            update-types: ['version-update:semver-major']
-          - dependency-name: 'typescript'
-            update-types: ['version-update:semver-major']
-      groups:
-          # Security fixes arrive as a single pull request rather than one per advisory.
-          security:
-              applies-to: security-updates
-              patterns:
-                  - '*'
-          nx:
-              patterns:
-                  - 'nx'
-                  - '@nx/*'
-                  - '@nrwl/*'
-          eslint:
-              patterns:
-                  - 'eslint*'
-                  # `eslint*` does not match scoped names, so the scopes are listed separately.
-                  - '@typescript-eslint/*'
-          prettier:
-              patterns:
-                  - 'prettier*'
-                  - 'pretty-quick'
-                  - '@ianvs/prettier-plugin-sort-imports'
-          commitlint:
-              patterns:
-                  - '@commitlint/*'
-          jest:
-              patterns:
-                  - 'jest*'
-                  - '@types/jest'
-                  - 'ts-jest'
-          swc:
-              patterns:
-                  - '@swc/*'
-          luxon:
-              patterns:
-                  - 'luxon'
-                  - '@types/luxon'
-          koobiq:
-              patterns:
-                  - '@koobiq/*'
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    commit-message:
+      # Feeds the `dependencies` label in workflows/pr-label.yml, which feeds the release notes.
+      prefix: 'chore'
+      prefix-development: 'chore'
+      include: 'scope'
+    ignore:
+      # Majors here have to be upgraded deliberately: the Nx packages move as one set together
+      # with the `nx` runtime, and TypeScript is pinned to what the installed Nx generators
+      # support. Everything else gets major updates.
+      - dependency-name: 'nx'
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@nx/*'
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@nrwl/*'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'typescript'
+        update-types: ['version-update:semver-major']
+      # ESLint is coupled to Nx, and therefore pinned by the entries above: @nx/eslint@19 declares
+      # a peer of eslint ^8.0.0 || ^9.0.0, so eslint 10 cannot be installed at all while Nx stays
+      # on 19 — npm fails the whole install with ERESOLVE. The major has to wait for the Nx
+      # upgrade. Everything else in the eslint group, @typescript-eslint included, still gets
+      # majors: @typescript-eslint 8 needs eslint ^8.57 || ^9, which the same peer range allows.
+      - dependency-name: 'eslint'
+        update-types: ['version-update:semver-major']
+    groups:
+      # Security fixes arrive as a single pull request rather than one per advisory.
+      security:
+        applies-to: security-updates
+        patterns:
+          - '*'
+      nx:
+        patterns:
+          - 'nx'
+          - '@nx/*'
+          - '@nrwl/*'
+      eslint:
+        patterns:
+          - 'eslint*'
+          # `eslint*` does not match scoped names, so the scopes are listed separately.
+          - '@typescript-eslint/*'
+      prettier:
+        patterns:
+          - 'prettier*'
+          - 'pretty-quick'
+          - '@ianvs/prettier-plugin-sort-imports'
+      commitlint:
+        patterns:
+          - '@commitlint/*'
+      jest:
+        patterns:
+          - 'jest*'
+          - '@types/jest'
+          - 'ts-jest'
+      swc:
+        patterns:
+          - '@swc/*'
+      luxon:
+        patterns:
+          - 'luxon'
+          - '@types/luxon'
+      koobiq:
+        patterns:
+          - '@koobiq/*'

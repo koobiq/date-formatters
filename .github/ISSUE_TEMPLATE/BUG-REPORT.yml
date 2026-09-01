@@ -3,60 +3,60 @@ description: Report a bug to help us improve Koobiq date formatters.
 title: '🐛 [BUG] - <title>'
 labels: ['bug']
 body:
-    - type: dropdown
-      id: package
-      attributes:
-          label: 'Package'
-          description: Which package is affected?
-          options:
-              - '@koobiq/date-formatter'
-              - '@koobiq/date-adapter'
-              - '@koobiq/luxon-date-adapter'
-              - '@koobiq/moment-date-adapter'
-              - '@koobiq/native-date-adapter'
-              - '@koobiq/internationalized-date-adapter'
-              - 'Not sure'
-      validations:
-          required: true
-    - type: input
-      id: version
-      attributes:
-          label: 'Version'
-          description: Which version of the package are you using?
-          placeholder: 3.6.0
-      validations:
-          required: true
-    - type: input
-      id: locale
-      attributes:
-          label: 'Locale'
-          description: Which locale does the problem occur in, if it is locale-specific?
-          placeholder: ru-RU
-      validations:
-          required: false
-    - type: textarea
-      id: description
-      attributes:
-          label: 'Describe the bug'
-          description: A clear and concise description of what the bug is.
-      validations:
-          required: true
-    - type: textarea
-      id: reprod
-      attributes:
-          label: 'Reproduction steps'
-          description: Please provide clear and accurate steps to reproduce the bug.
-          value: |
-              1. Create the adapter with '...'
-              2. Call '....'
-              3. See the returned string
-          render: bash
-      validations:
-          required: true
-    - type: textarea
-      id: expected
-      attributes:
-          label: 'Expected behavior'
-          description: Please enter a clear and concise description of what you expected to happen.
-      validations:
-          required: true
+  - type: dropdown
+    id: package
+    attributes:
+      label: 'Package'
+      description: Which package is affected?
+      options:
+        - '@koobiq/date-formatter'
+        - '@koobiq/date-adapter'
+        - '@koobiq/luxon-date-adapter'
+        - '@koobiq/moment-date-adapter'
+        - '@koobiq/native-date-adapter'
+        - '@koobiq/internationalized-date-adapter'
+        - 'Not sure'
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: 'Version'
+      description: Which version of the package are you using?
+      placeholder: 3.6.0
+    validations:
+      required: true
+  - type: input
+    id: locale
+    attributes:
+      label: 'Locale'
+      description: Which locale does the problem occur in, if it is locale-specific?
+      placeholder: ru-RU
+    validations:
+      required: false
+  - type: textarea
+    id: description
+    attributes:
+      label: 'Describe the bug'
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reprod
+    attributes:
+      label: 'Reproduction steps'
+      description: Please provide clear and accurate steps to reproduce the bug.
+      value: |
+        1. Create the adapter with '...'
+        2. Call '....'
+        3. See the returned string
+      render: bash
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 'Expected behavior'
+      description: Please enter a clear and concise description of what you expected to happen.
+    validations:
+      required: true

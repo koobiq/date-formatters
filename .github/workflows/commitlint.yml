@@ -3,17 +3,17 @@ name: Commitlint
 on: [pull_request]
 
 permissions:
-    contents: read
+  contents: read
 
 jobs:
-    commitlint:
-        name: Commitlint
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-            - uses: ./.github/workflows/actions/setup-node
-            # Pull requests are squash-merged with the title as the commit subject, so the title is
-            # what has to satisfy commitlint. Read through the environment, never interpolated.
-            - run: printf '%s\n' "$PR_TITLE" | npx commitlint --verbose
-              env:
-                  PR_TITLE: ${{ github.event.pull_request.title }}
+  commitlint:
+    name: Commitlint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/workflows/actions/setup-node
+      # Pull requests are squash-merged with the title as the commit subject, so the title is
+      # what has to satisfy commitlint. Read through the environment, never interpolated.
+      - run: printf '%s\n' "$PR_TITLE" | npx commitlint --verbose
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
