@@ -28,11 +28,9 @@ updates:
         update-types: ['version-update:semver-major']
       - dependency-name: 'typescript'
         update-types: ['version-update:semver-major']
-      # eslint-plugin-import declares a peer of eslint up to ^9 and has no release accepting 10,
-      # so eslint 10 fails the install for the whole workspace. @nx/eslint@23 already allows
-      # ^9 || ^10 — the plugin is the only thing holding the major back. Drop this entry once
-      # eslint-plugin-import ships eslint 10 support. The rest of the eslint group,
-      # @typescript-eslint included, still gets majors.
+      # ESLint is gated by Nx, and therefore by the entries above: @nx/eslint@23 declares a peer
+      # of eslint ^9.0.0 || ^10.0.0, so the next major cannot be installed until Nx widens it.
+      # The rest of the eslint group, @typescript-eslint included, still gets majors.
       - dependency-name: 'eslint'
         update-types: ['version-update:semver-major']
     groups:

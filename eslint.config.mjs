@@ -1,15 +1,5 @@
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-
-import { FlatCompat } from '@eslint/eslintrc';
-import js from '@eslint/js';
 import nx from '@nx/eslint-plugin';
 import jsoncEslintParser from 'jsonc-eslint-parser';
-
-const compat = new FlatCompat({
-    baseDirectory: dirname(fileURLToPath(import.meta.url)),
-    recommendedConfig: js.configs.recommended
-});
 
 export default [
     ...nx.configs['flat/base'],
@@ -41,19 +31,6 @@ export default [
     },
     ...nx.configs['flat/typescript'],
     ...nx.configs['flat/javascript'],
-    ...compat
-        .config({
-            env: {
-                jest: true
-            }
-        })
-        .map((config) => ({
-            ...config,
-            files: ['**/*.spec.ts', '**/*.spec.tsx', '**/*.spec.js', '**/*.spec.jsx'],
-            rules: {
-                ...config.rules
-            }
-        })),
     {
         ignores: [
             '/node_modules',
@@ -63,6 +40,10 @@ export default [
             '.lintstagedrc.js',
             'jest.preset.js',
             '**/*.config.js',
+            // Specs are excluded from linting. Kept here rather than per package so it also
+            // applies when ESLint is invoked from the repo root, as lint-staged does — flat
+            // config resolves one config from cwd and never reaches the package configs.
+            '**/*.spec.ts',
             '**/*.config.mjs',
             '**/*.d.ts'
         ]

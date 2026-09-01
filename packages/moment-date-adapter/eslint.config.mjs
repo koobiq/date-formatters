@@ -17,11 +17,6 @@ export default [
     },
     {
         files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
-        // Override or add rules here
-        rules: {}
-    },
-    {
-        files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
         rules: {
             // parse, deserialize and isDateInstance take arbitrary untrusted input and narrow it,
             // and the abstract DateAdapter they implement declares them with `any`. The other five
@@ -40,6 +35,6 @@ export default [
         rules: {}
     },
     {
-        ignores: ['jest.config.js', '**/*.spec.ts']
+        ignores: ['jest.config.js']
     }
 ];
