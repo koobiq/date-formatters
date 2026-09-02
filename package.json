@@ -2,6 +2,10 @@
     "name": "koobiq-adapter-formatters",
     "version": "3.5.1",
     "license": "MIT",
+    "engines": {
+        "node": ">=24.16",
+        "npm": ">=11"
+    },
     "scripts": {
         "build:affected": "nx affected --base=origin/main --target=build --parallel",
         "build:all": "nx run-many --target=build --all --parallel=false",
@@ -52,7 +56,7 @@
         "@swc/helpers": "0.5.23",
         "@types/jest": "30.0.0",
         "@types/luxon": "^3.4.2",
-        "@types/node": "26.4.0",
+        "@types/node": "24.13.3",
         "@typescript-eslint/eslint-plugin": "8.69.0",
         "@typescript-eslint/parser": "8.69.0",
         "eslint": "10.9.1",

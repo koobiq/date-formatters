@@ -39,9 +39,13 @@ const momentToStandardLangMap: { [lang: string]: string } = {
     fa: 'fa-IR'
 };
 
-const standardLangToMomentMap: { [lang: string]: string } = Object.fromEntries(
-    Object.entries(momentToStandardLangMap).map(([key, value]) => [value, key])
-);
+const standardLangToMomentMap: { [lang: string]: string } = Object.entries(momentToStandardLangMap).reduce<{
+    [lang: string]: string;
+}>((acc, [key, value]) => {
+    acc[value] = key;
+
+    return acc;
+}, {});
 
 export class MomentDateAdapter extends DateAdapter<Moment> {
     protected predefinedLocales: { [name: string]: DateAdapterConfig } = {};
