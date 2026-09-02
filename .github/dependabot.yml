@@ -33,6 +33,20 @@ updates:
       # The rest of the eslint group, @typescript-eslint included, still gets majors.
       - dependency-name: 'eslint'
         update-types: ['version-update:semver-major']
+      # @koobiq/cli drives the release: workflows/publish.yml is the only thing that runs it, and
+      # only on a tag push, so no check in this repository executes a line of it. A major that
+      # renamed a command or changed how it reads release.packages would surface for the first
+      # time mid-release, after the tag exists. Upgrade it deliberately, with a local
+      # `DEBUG=1 npm run publish:github-ci` first — DEBUG turns the npm publish into a dry run.
+      - dependency-name: '@koobiq/cli'
+        update-types: ['version-update:semver-major']
+      # @types/node's major tracks the Node line in .nvmrc, not the newest major on npm: types
+      # from a major ahead of the runtime describe APIs the code will not have, and they
+      # type-check clean. Only the major is meaningful here — the package has its own minor
+      # cadence (66 releases across the 24 line alone), so 24.13.3 is "the Node 24 typings",
+      # not typings for 24.13.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
     groups:
       # Security fixes arrive as a single pull request rather than one per advisory.
       security:
