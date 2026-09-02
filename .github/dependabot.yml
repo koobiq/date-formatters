@@ -40,8 +40,11 @@ updates:
       # `DEBUG=1 npm run publish:github-ci` first — DEBUG turns the npm publish into a dry run.
       - dependency-name: '@koobiq/cli'
         update-types: ['version-update:semver-major']
-      # @types/node tracks the Node in .nvmrc, not the newest major on npm. Types from a major
-      # ahead of the runtime describe APIs the code will not have, and they type-check clean.
+      # @types/node's major tracks the Node line in .nvmrc, not the newest major on npm: types
+      # from a major ahead of the runtime describe APIs the code will not have, and they
+      # type-check clean. Only the major is meaningful here — the package has its own minor
+      # cadence (66 releases across the 24 line alone), so 24.13.3 is "the Node 24 typings",
+      # not typings for 24.13.
       - dependency-name: '@types/node'
         update-types: ['version-update:semver-major']
     groups:
