@@ -785,7 +785,7 @@ const runFormatterSuite = <D>(
                                 const shape = (date: string) => (withTime ? `${date}, ${v.TIME}` : date);
                                 const withOpenedYear = (token: string) => `${token}${w.openedYearSeparator}${v.YEAR}`;
 
-                                it('throw Error', () => {
+                                it('throws Error', () => {
                                     expect(() => call(null)).toThrow('Invalid date');
                                 });
 
@@ -984,7 +984,7 @@ const runFormatterSuite = <D>(
                             expect(call(start, anchor())).toBe(pair(named(4, 'hours'), named(10, 'minutes')));
                         });
 
-                        it('hours and minutes (more then 24 hours)', () => {
+                        it('hours and minutes (more than 24 hours)', () => {
                             const start = before({ hours: 32, minutes: 10 });
 
                             expect(call(start, anchor(), ['hours', 'minutes'])).toBe(
