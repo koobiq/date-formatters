@@ -7,6 +7,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Nx monorepo, npm. Node is pinned in `.nvmrc` (24.20.0, npm >= 11) — the pin is load-bearing for
 `npm ci`, see the comment in `.github/workflows/actions/setup-node/action.yml`.
 
+Every entry point is an npm script, so `package.json` is the complete list — prefer those over
+calling `nx` by hand.
+
 ```bash
 npm ci
 npm run build:all        # nx run-many, --parallel=false
@@ -16,21 +19,22 @@ npm run format:check     # prettier; CI runs this together with lint:all
 npm run format:write
 ```
 
-Single project (project names are the directory names under `packages/`, without the `@koobiq/` scope):
+Each target also exists per package, as `<target>:<package>` — the package is the directory name
+under `packages/`, without the `@koobiq/` scope:
 
 ```bash
-npx nx build luxon-date-adapter      # or npm run build:luxon-date-adapter
-npx nx test luxon-date-adapter
-npx nx lint luxon-date-adapter
+npm run build:luxon-date-adapter
+npm run test:luxon-date-adapter
+npm run lint:luxon-date-adapter
 ```
 
-Narrowing a test run — the executor is `@nx/jest:jest`, which takes named options, **not** jest's
-short flags:
+Narrowing a test run — jest options go after `--`. The executor is `@nx/jest:jest`, which takes
+named options, **not** jest's short flags:
 
 ```bash
-npx nx test luxon-date-adapter --testFile=packages/luxon-date-adapter/src/adapter.spec.ts
-npx nx test date-formatter --testNamePattern="duration"
-npx nx test native-date-adapter --updateSnapshot
+npm run test:luxon-date-adapter -- --testFile=packages/luxon-date-adapter/src/adapter.spec.ts
+npm run test:date-formatter -- --testNamePattern="duration"
+npm run test:native-date-adapter -- --updateSnapshot
 ```
 
 An unrecognized flag (`-t`, `-u`) is silently dropped, and Nx then hashes to the same cache key as

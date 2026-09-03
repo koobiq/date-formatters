@@ -24,7 +24,9 @@ npm run format:check
 
 Useful during development:
 
--   `npm run build:<package>` — build a single package, e.g. `npm run build:luxon-date-adapter`
+-   `npm run build:<package>`, `npm run test:<package>`, `npm run lint:<package>` — run one
+    target for a single package, e.g. `npm run test:luxon-date-adapter`. The package is its
+    directory name under `packages/`.
 -   `npm run format:write` — apply Prettier to `packages/`
 
 Snapshot tests cover the formatted output for every supported locale. When you deliberately
