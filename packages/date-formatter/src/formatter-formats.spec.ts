@@ -1,12 +1,13 @@
-import { CalendarDate, CalendarDateTime } from '@internationalized/date';
+import { CalendarDateTime } from '@internationalized/date';
 import { InternationalizedDateAdapter } from '@koobiq/internationalized-date-adapter';
 import { NativeDateAdapter } from '@koobiq/native-date-adapter';
 
 import { DateFormatter } from './formatter';
 
-describe('DateFormatter with InternationalizedDateAdapter', () => {
-    const currentYear = new Date().getUTCFullYear();
+describe('InternationalizedDateAdapter format matrix', () => {
     const fixedToday = new CalendarDateTime(2026, 3, 17, 11, 51, 13, 299);
+    /** the year `fixedToday` falls in, so that "(current year)" means the same thing on every run */
+    const currentYear = fixedToday.year;
 
     class FixedTodayAdapter extends InternationalizedDateAdapter {
         override today(): CalendarDateTime {
@@ -15,13 +16,6 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
     }
 
     const createFormatter = (locale = 'en-US') => {
-        const adapter = new InternationalizedDateAdapter(locale);
-        const formatter = new DateFormatter(adapter, locale);
-
-        return { adapter, formatter };
-    };
-
-    const createRelativeFormatter = (locale = 'en-US') => {
         const adapter = new FixedTodayAdapter(locale);
         const formatter = new DateFormatter(adapter, locale);
 
@@ -30,7 +24,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
 
     describe('absolute date', () => {
         describe('long format', () => {
-            it('formats absoluteLongDate from CalendarDate', () => {
+            it('formats absoluteLongDate (midnight)', () => {
                 const { formatter } = createFormatter();
                 const value = new CalendarDateTime(currentYear, 3, 17, 0, 0, 0, 0);
 
@@ -99,7 +93,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
         });
 
         describe('short format', () => {
-            it('formats absoluteShortDate from CalendarDate', () => {
+            it('formats absoluteShortDate (midnight)', () => {
                 const { formatter } = createFormatter();
                 const value = new CalendarDateTime(currentYear, 3, 17, 0, 0, 0, 0);
 
@@ -171,28 +165,28 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
     describe('relative date', () => {
         describe('long format', () => {
             it('formats Before yesterday (not current year)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2025, 3, 15, 12, 51, 13, 299);
 
                 expect(formatter.relativeLongDate(value)).toBe('March 15, 2025');
             });
 
             it('formats Before yesterday (current year)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 15, 12, 51, 13, 299);
 
                 expect(formatter.relativeLongDateTime(value)).toBe('March 15, 12:51');
             });
 
             it('formats Before yesterday (current year) (with seconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 15, 12, 51, 13, 299);
 
                 expect(formatter.relativeLongDateTime(value, { seconds: true })).toBe('March 15, 12:51:13');
             });
 
             it('formats Before yesterday (current year) (with milliseconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 15, 12, 51, 13, 299);
 
                 expect(formatter.relativeLongDateTime(value, { seconds: true, milliseconds: true })).toBe(
@@ -201,21 +195,21 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
             });
 
             it('formats Yesterday', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 16, 12, 51, 13, 299);
 
                 expect(formatter.relativeLongDateTime(value)).toBe('Yesterday, 12:51');
             });
 
             it('formats Yesterday (with seconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 16, 12, 51, 13, 299);
 
                 expect(formatter.relativeLongDateTime(value, { seconds: true })).toBe('Yesterday, 12:51:13');
             });
 
             it('formats Yesterday (with milliseconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 16, 12, 51, 13, 299);
 
                 expect(formatter.relativeLongDateTime(value, { seconds: true, milliseconds: true })).toBe(
@@ -224,19 +218,19 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
             });
 
             it('formats Today', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
 
                 expect(formatter.relativeLongDateTime(fixedToday)).toBe('Today, 11:51');
             });
 
             it('formats Today (with seconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
 
                 expect(formatter.relativeLongDateTime(fixedToday, { seconds: true })).toBe('Today, 11:51:13');
             });
 
             it('formats Today (with milliseconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
 
                 expect(formatter.relativeLongDateTime(fixedToday, { seconds: true, milliseconds: true })).toBe(
                     'Today, 11:51:13.299'
@@ -244,21 +238,21 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
             });
 
             it('formats Tomorrow', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 18, 13, 51, 13, 299);
 
                 expect(formatter.relativeLongDateTime(value)).toBe('Tomorrow, 13:51');
             });
 
             it('formats Tomorrow (with seconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 18, 13, 51, 13, 299);
 
                 expect(formatter.relativeLongDateTime(value, { seconds: true })).toBe('Tomorrow, 13:51:13');
             });
 
             it('formats Tomorrow (with milliseconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 18, 13, 51, 13, 299);
 
                 expect(formatter.relativeLongDateTime(value, { seconds: true, milliseconds: true })).toBe(
@@ -267,21 +261,21 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
             });
 
             it('formats After tomorrow (current year)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 19, 12, 51, 13, 299);
 
                 expect(formatter.relativeLongDateTime(value)).toBe('March 19, 12:51');
             });
 
             it('formats After tomorrow (current year) (with seconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 19, 12, 51, 13, 299);
 
                 expect(formatter.relativeLongDateTime(value, { seconds: true })).toBe('March 19, 12:51:13');
             });
 
             it('formats After tomorrow (current year) (with milliseconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 19, 12, 51, 13, 299);
 
                 expect(formatter.relativeLongDateTime(value, { seconds: true, milliseconds: true })).toBe(
@@ -290,7 +284,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
             });
 
             it('formats After tomorrow (not current year)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2027, 3, 19, 12, 51, 13, 299);
 
                 expect(formatter.relativeLongDate(value)).toBe('March 19, 2027');
@@ -299,28 +293,28 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
 
         describe('short format', () => {
             it('formats Before yesterday (not current year)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2025, 3, 15, 12, 51, 13, 306);
 
                 expect(formatter.relativeShortDate(value)).toBe('Mar 15, 2025');
             });
 
             it('formats Before yesterday (current year)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 15, 12, 51, 13, 306);
 
                 expect(formatter.relativeShortDateTime(value)).toBe('Mar 15, 12:51');
             });
 
             it('formats Before yesterday (current year) (with seconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 15, 12, 51, 13, 306);
 
                 expect(formatter.relativeShortDateTime(value, { seconds: true })).toBe('Mar 15, 12:51:13');
             });
 
             it('formats Before yesterday (current year) (with milliseconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 15, 12, 51, 13, 306);
 
                 expect(formatter.relativeShortDateTime(value, { seconds: true, milliseconds: true })).toBe(
@@ -329,21 +323,21 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
             });
 
             it('formats Yesterday', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 16, 12, 51, 13, 306);
 
                 expect(formatter.relativeShortDateTime(value)).toBe('Yesterday, 12:51');
             });
 
             it('formats Yesterday (with seconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 16, 12, 51, 13, 306);
 
                 expect(formatter.relativeShortDateTime(value, { seconds: true })).toBe('Yesterday, 12:51:13');
             });
 
             it('formats Yesterday (with milliseconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 16, 12, 51, 13, 306);
 
                 expect(formatter.relativeShortDateTime(value, { seconds: true, milliseconds: true })).toBe(
@@ -352,21 +346,21 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
             });
 
             it('formats Today', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 17, 11, 51, 13, 306);
 
                 expect(formatter.relativeShortDateTime(value)).toBe('Today, 11:51');
             });
 
             it('formats Today (with seconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 17, 11, 51, 13, 306);
 
                 expect(formatter.relativeShortDateTime(value, { seconds: true })).toBe('Today, 11:51:13');
             });
 
             it('formats Today (with milliseconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 17, 11, 51, 13, 306);
 
                 expect(formatter.relativeShortDateTime(value, { seconds: true, milliseconds: true })).toBe(
@@ -375,21 +369,21 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
             });
 
             it('formats Tomorrow', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 18, 13, 51, 13, 306);
 
                 expect(formatter.relativeShortDateTime(value)).toBe('Tomorrow, 13:51');
             });
 
             it('formats Tomorrow (with seconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 18, 13, 51, 13, 306);
 
                 expect(formatter.relativeShortDateTime(value, { seconds: true })).toBe('Tomorrow, 13:51:13');
             });
 
             it('formats Tomorrow (with milliseconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 18, 13, 51, 13, 306);
 
                 expect(formatter.relativeShortDateTime(value, { seconds: true, milliseconds: true })).toBe(
@@ -398,21 +392,21 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
             });
 
             it('formats After tomorrow (current year)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 19, 12, 51, 13, 306);
 
                 expect(formatter.relativeShortDateTime(value)).toBe('Mar 19, 12:51');
             });
 
             it('formats After tomorrow (current year) (with seconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 19, 12, 51, 13, 306);
 
                 expect(formatter.relativeShortDateTime(value, { seconds: true })).toBe('Mar 19, 12:51:13');
             });
 
             it('formats After tomorrow (current year) (with milliseconds)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2026, 3, 19, 12, 51, 13, 306);
 
                 expect(formatter.relativeShortDateTime(value, { seconds: true, milliseconds: true })).toBe(
@@ -421,7 +415,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
             });
 
             it('formats After tomorrow (not current year)', () => {
-                const { formatter } = createRelativeFormatter();
+                const { formatter } = createFormatter();
                 const value = new CalendarDateTime(2027, 3, 19, 12, 51, 13, 306);
 
                 expect(formatter.relativeShortDate(value)).toBe('Mar 19, 2027');
@@ -433,7 +427,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
         describe('closed range', () => {
             describe('long format', () => {
                 it('formats rangeLongDate (current month)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 1, 0, 0, 0, 0);
                     const end = new CalendarDateTime(2026, 3, 10, 0, 0, 0, 0);
 
@@ -441,7 +435,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeLongDate (not current month)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 1, 1, 0, 0, 0, 0);
                     const end = new CalendarDateTime(2026, 2, 10, 0, 0, 0, 0);
 
@@ -449,7 +443,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeLongDate (start date is not in current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2025, 1, 1, 0, 0, 0, 0);
                     const end = new CalendarDateTime(2026, 2, 10, 0, 0, 0, 0);
 
@@ -457,7 +451,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeLongDate (end date is not in current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 1, 1, 0, 0, 0, 0);
                     const end = new CalendarDateTime(2027, 2, 10, 0, 0, 0, 0);
 
@@ -465,7 +459,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeLongDateTime (the same day, current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 10, 10, 14, 13, 316);
                     const end = new CalendarDateTime(2026, 3, 10, 11, 28, 13, 316);
 
@@ -473,7 +467,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeLongDateTime (the same day, current year) (with seconds)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 10, 10, 14, 13, 316);
                     const end = new CalendarDateTime(2026, 3, 10, 11, 28, 13, 316);
 
@@ -483,7 +477,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeLongDateTime (the same day, current year) (with milliseconds)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 10, 10, 14, 13, 316);
                     const end = new CalendarDateTime(2026, 3, 10, 11, 28, 13, 316);
 
@@ -493,7 +487,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeLongDateTime (the same day, not current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2025, 1, 11, 10, 14, 13, 316);
                     const end = new CalendarDateTime(2025, 1, 11, 11, 28, 13, 316);
 
@@ -501,7 +495,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeLongDateTime (not current month)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 1, 1, 10, 14, 13, 316);
                     const end = new CalendarDateTime(2026, 2, 1, 11, 28, 13, 316);
 
@@ -509,7 +503,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeLongDateTime (start date is not in current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2025, 1, 1, 10, 14, 13, 316);
                     const end = new CalendarDateTime(2026, 2, 1, 11, 28, 13, 316);
 
@@ -519,7 +513,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeLongDateTime (end date is not in current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 1, 1, 10, 14, 13, 316);
                     const end = new CalendarDateTime(2027, 2, 1, 11, 28, 13, 316);
 
@@ -531,7 +525,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
 
             describe('short format', () => {
                 it('formats rangeShortDate (current month)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 1, 0, 0, 0, 0);
                     const end = new CalendarDateTime(2026, 3, 10, 0, 0, 0, 0);
 
@@ -539,7 +533,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeShortDate (not current month)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 1, 1, 0, 0, 0, 0);
                     const end = new CalendarDateTime(2026, 2, 10, 0, 0, 0, 0);
 
@@ -547,7 +541,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeShortDate (start date is not in current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2025, 1, 1, 0, 0, 0, 0);
                     const end = new CalendarDateTime(2026, 2, 10, 0, 0, 0, 0);
 
@@ -555,7 +549,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeShortDate (end date is not in current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 1, 1, 0, 0, 0, 0);
                     const end = new CalendarDateTime(2027, 2, 10, 0, 0, 0, 0);
 
@@ -563,7 +557,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeShortDateTime (the same day, current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 10, 10, 14, 13, 543);
                     const end = new CalendarDateTime(2026, 3, 10, 11, 28, 13, 543);
 
@@ -571,7 +565,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeShortDateTime (the same day, current year) (with seconds)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 10, 10, 14, 13, 543);
                     const end = new CalendarDateTime(2026, 3, 10, 11, 28, 13, 543);
 
@@ -581,7 +575,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeShortDateTime (the same day, current year) (with milliseconds)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 10, 10, 14, 13, 543);
                     const end = new CalendarDateTime(2026, 3, 10, 11, 28, 13, 543);
 
@@ -591,7 +585,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeShortDateTime (the same day, not current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2025, 1, 11, 10, 14, 13, 543);
                     const end = new CalendarDateTime(2025, 1, 11, 11, 28, 13, 543);
 
@@ -599,7 +593,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeShortDateTime (not current month)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 1, 1, 10, 14, 13, 543);
                     const end = new CalendarDateTime(2026, 2, 1, 11, 28, 13, 543);
 
@@ -607,7 +601,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeShortDateTime (start date is not in current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2025, 1, 1, 10, 14, 13, 543);
                     const end = new CalendarDateTime(2026, 2, 1, 11, 28, 13, 543);
 
@@ -615,7 +609,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeShortDateTime (end date is not in current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 1, 1, 10, 14, 13, 543);
                     const end = new CalendarDateTime(2027, 2, 1, 11, 28, 13, 543);
 
@@ -625,7 +619,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
 
             describe('middle format', () => {
                 it('formats rangeMiddleDateTime', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 1, 11, 48, 15, 540);
                     const end = new CalendarDateTime(2026, 3, 10, 11, 48, 15, 540);
 
@@ -633,7 +627,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeMiddleDateTime (with seconds)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 1, 11, 48, 15, 540);
                     const end = new CalendarDateTime(2026, 3, 10, 11, 48, 15, 540);
 
@@ -643,7 +637,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeMiddleDateTime (with milliseconds)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 1, 11, 48, 15, 540);
                     const end = new CalendarDateTime(2026, 3, 10, 11, 48, 15, 540);
 
@@ -653,7 +647,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeMiddleDateTime (the same day)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 10, 10, 14, 15, 540);
                     const end = new CalendarDateTime(2026, 3, 10, 10, 28, 15, 540);
 
@@ -661,7 +655,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeMiddleDateTime (the same day) (with seconds)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 10, 10, 14, 15, 540);
                     const end = new CalendarDateTime(2026, 3, 10, 10, 28, 15, 540);
 
@@ -671,7 +665,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeMiddleDateTime (the same day) (with milliseconds)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 10, 10, 14, 15, 540);
                     const end = new CalendarDateTime(2026, 3, 10, 10, 28, 15, 540);
 
@@ -681,7 +675,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeMiddleDateTime (the same day, not current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2025, 1, 11, 10, 14, 15, 540);
                     const end = new CalendarDateTime(2025, 1, 11, 11, 28, 15, 540);
 
@@ -689,7 +683,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeMiddleDateTime (not current month)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 1, 1, 10, 14, 15, 540);
                     const end = new CalendarDateTime(2026, 2, 1, 11, 28, 15, 540);
 
@@ -697,7 +691,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeMiddleDateTime (start date is not in current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2025, 1, 1, 10, 14, 15, 540);
                     const end = new CalendarDateTime(2026, 1, 1, 11, 28, 15, 540);
 
@@ -707,7 +701,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats rangeMiddleDateTime (end date is not in current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 1, 1, 10, 14, 15, 540);
                     const end = new CalendarDateTime(2027, 1, 1, 11, 28, 15, 540);
 
@@ -721,42 +715,42 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
         describe('opened range', () => {
             describe('long format', () => {
                 it('formats opened long date range (only start)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 16, 11, 48, 15, 547);
 
                     expect(formatter.rangeLongDate(start, null)).toBe('From March 16');
                 });
 
                 it('formats opened long date range (only end)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const end = new CalendarDateTime(2026, 3, 16, 11, 48, 15, 547);
 
                     expect(formatter.rangeLongDate(null, end)).toBe('Until March 16');
                 });
 
                 it('formats opened long date range (only start, start date is not in current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2027, 3, 16, 11, 48, 15, 547);
 
                     expect(formatter.rangeLongDate(start, null)).toBe('From March 16 2027');
                 });
 
                 it('formats opened long date range (only end, end date is not in current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const end = new CalendarDateTime(2027, 3, 16, 11, 48, 15, 547);
 
                     expect(formatter.rangeLongDate(null, end)).toBe('Until March 16 2027');
                 });
 
                 it('formats opened long datetime range (only start)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 16, 11, 48, 15, 547);
 
                     expect(formatter.rangeLongDateTime(start, undefined)).toBe('From March 16, 11:48');
                 });
 
                 it('formats opened long datetime range (only start) with seconds', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 16, 11, 48, 15, 547);
 
                     expect(formatter.rangeLongDateTime(start, undefined, { seconds: true })).toBe(
@@ -765,7 +759,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats opened long datetime range (only start) with milliseconds', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 16, 11, 48, 15, 547);
 
                     expect(formatter.rangeLongDateTime(start, undefined, { seconds: true, milliseconds: true })).toBe(
@@ -774,28 +768,28 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats opened long datetime range (only start, start date is not in current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2027, 3, 16, 11, 48, 15, 547);
 
                     expect(formatter.rangeLongDateTime(start, undefined)).toBe('From March 16 2027, 11:48');
                 });
 
                 it('formats opened long datetime range (only end)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const end = new CalendarDateTime(2026, 3, 16, 11, 48, 15, 547);
 
                     expect(formatter.rangeLongDateTime(null, end)).toBe('Until March 16, 11:48');
                 });
 
                 it('formats opened long datetime range (only end) with seconds', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const end = new CalendarDateTime(2026, 3, 16, 11, 48, 15, 547);
 
                     expect(formatter.rangeLongDateTime(null, end, { seconds: true })).toBe('Until March 16, 11:48:15');
                 });
 
                 it('formats opened long datetime range (only end) with milliseconds', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const end = new CalendarDateTime(2026, 3, 16, 11, 48, 15, 547);
 
                     expect(formatter.rangeLongDateTime(null, end, { seconds: true, milliseconds: true })).toBe(
@@ -804,7 +798,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats opened long datetime range (only end, end date is not in current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const end = new CalendarDateTime(2027, 3, 16, 11, 48, 15, 547);
 
                     expect(formatter.rangeLongDateTime(null, end)).toBe('Until March 16 2027, 11:48');
@@ -813,42 +807,42 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
 
             describe('short format', () => {
                 it('formats opened short date range (only start)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 16, 11, 48, 15, 548);
 
                     expect(formatter.rangeShortDate(start, undefined)).toBe('From Mar 16');
                 });
 
                 it('formats opened short date range (only end)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const end = new CalendarDateTime(2026, 3, 16, 11, 48, 15, 548);
 
                     expect(formatter.rangeShortDate(null, end)).toBe('Until Mar 16');
                 });
 
                 it('formats opened short date range (only start, start date is not in current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2027, 3, 16, 11, 48, 15, 548);
 
                     expect(formatter.rangeShortDate(start, undefined)).toBe('From Mar 16 2027');
                 });
 
                 it('formats opened short date range (only end, end date is not in current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const end = new CalendarDateTime(2027, 3, 16, 11, 48, 15, 548);
 
                     expect(formatter.rangeShortDate(null, end)).toBe('Until Mar 16 2027');
                 });
 
                 it('formats opened short datetime range (only start)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 16, 11, 48, 15, 548);
 
                     expect(formatter.rangeShortDateTime(start, undefined)).toBe('From Mar 16, 11:48');
                 });
 
                 it('formats opened short datetime range (only start) with seconds', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 16, 11, 48, 15, 548);
 
                     expect(formatter.rangeShortDateTime(start, undefined, { seconds: true })).toBe(
@@ -857,7 +851,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats opened short datetime range (only start) with milliseconds', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2026, 3, 16, 11, 48, 15, 548);
 
                     expect(formatter.rangeShortDateTime(start, undefined, { seconds: true, milliseconds: true })).toBe(
@@ -866,28 +860,28 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats opened short datetime range (only start, start date is not in current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const start = new CalendarDateTime(2027, 3, 16, 11, 48, 15, 548);
 
                     expect(formatter.rangeShortDateTime(start, undefined)).toBe('From Mar 16 2027, 11:48');
                 });
 
                 it('formats opened short datetime range (only end)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const end = new CalendarDateTime(2026, 3, 16, 11, 48, 15, 548);
 
                     expect(formatter.rangeShortDateTime(null, end)).toBe('Until Mar 16, 11:48');
                 });
 
                 it('formats opened short datetime range (only end) with seconds', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const end = new CalendarDateTime(2026, 3, 16, 11, 48, 15, 548);
 
                     expect(formatter.rangeShortDateTime(null, end, { seconds: true })).toBe('Until Mar 16, 11:48:15');
                 });
 
                 it('formats opened short datetime range (only end) with milliseconds', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const end = new CalendarDateTime(2026, 3, 16, 11, 48, 15, 548);
 
                     expect(formatter.rangeShortDateTime(null, end, { seconds: true, milliseconds: true })).toBe(
@@ -896,7 +890,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
                 });
 
                 it('formats opened short datetime range (only end, end date is not in current year)', () => {
-                    const { formatter } = createRelativeFormatter();
+                    const { formatter } = createFormatter();
                     const end = new CalendarDateTime(2027, 3, 16, 11, 48, 15, 548);
 
                     expect(formatter.rangeShortDateTime(null, end)).toBe('Until Mar 16 2027, 11:48');
@@ -1286,7 +1280,7 @@ describe('DateFormatter with InternationalizedDateAdapter', () => {
     });
 });
 
-describe('DateFormatter with NativeDateAdapter', () => {
+describe('NativeDateAdapter format integration', () => {
     const nbsp = '\u00A0';
 
     const createAdapter = () => {

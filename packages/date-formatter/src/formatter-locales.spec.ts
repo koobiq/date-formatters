@@ -149,7 +149,6 @@ const tokensOf = <D>(adapter: DateAdapter<D>) => {
     return {
         YEAR: read('YEAR'),
         DAY: read('DAY'),
-        MONTH: read('MONTH'),
         TIME: read('TIME'),
         SECONDS: read('SECONDS'),
         MILLISECONDS: read('MILLISECONDS'),
@@ -196,16 +195,20 @@ const runFormatterSuite = <D>(
 
                 const shift = (date: D, amount: DurationObjectUnits): D => adapter.addCalendarUnits(date, amount);
 
+                /**
+                 * `startOf` is destructive on a mutable date type — `MomentDateAdapter` forwards straight to
+                 * moment's in-place `startOf` — so it is only ever given a copy, never the caller's instance.
+                 */
+                const startOfDay = (date: D): D => adapter.startOf(shift(date, {}), 'day');
+
                 /** `endOf('day')` has no adapter-level equivalent: walk to the next midnight and step back */
-                const endOfDay = (date: D): D =>
-                    shift(adapter.startOf(shift(date, { days: 1 }), 'day'), { milliseconds: -1 });
+                const endOfDay = (date: D): D => shift(startOfDay(shift(date, { days: 1 })), { milliseconds: -1 });
 
                 /** the three instants a relative day has to collapse to the same word */
-                const acrossDay = (date: D): D[] => [adapter.startOf(date, 'day'), date, endOfDay(date)];
+                const acrossDay = (date: D): D[] => [startOfDay(date), date, endOfDay(date)];
 
                 beforeEach(() => {
                     adapter = createAdapter(locale);
-                    adapter.setLocale(locale);
 
                     today = adapter.createDateTime(FIXED_TODAY.year, FIXED_TODAY.month, FIXED_TODAY.day, 0, 0, 0, 0);
                     adapter.today = () => today;
@@ -577,8 +580,7 @@ const runFormatterSuite = <D>(
                             label: string,
                             method: string,
                             token: () => string,
-                            call: (start: D, end: D, options?: { seconds?: boolean; milliseconds?: boolean }) => string,
-                            withPrecisionCases: boolean
+                            call: (start: D, end: D, options?: { seconds?: boolean; milliseconds?: boolean }) => string
                         ) => {
                             describe(`Range ${label} (${method} method)`, () => {
                                 const dateTime = () => `${token()}, ${v.TIME}`;
@@ -648,33 +650,25 @@ const runFormatterSuite = <D>(
                                     );
                                 });
 
-                                if (withPrecisionCases) {
-                                    it(`${method} (with seconds)`, () => {
-                                        const start = firstOfMonth();
-                                        const end = shift(start, { days: 10 });
-                                        const format = `${dateTime()}:${v.SECONDS}`;
+                                it(`${method} (with seconds)`, () => {
+                                    const start = firstOfMonth();
+                                    const end = shift(start, { days: 10 });
+                                    const format = `${dateTime()}:${v.SECONDS}`;
 
-                                        expect(call(start, end, { seconds: true })).toBe(
-                                            `${adapter.format(start, format)}${v.LONG_DASH}${adapter.format(
-                                                end,
-                                                format
-                                            )}`
-                                        );
-                                    });
+                                    expect(call(start, end, { seconds: true })).toBe(
+                                        `${adapter.format(start, format)}${v.LONG_DASH}${adapter.format(end, format)}`
+                                    );
+                                });
 
-                                    it(`${method} (with milliseconds)`, () => {
-                                        const start = firstOfMonth();
-                                        const end = shift(start, { days: 10 });
-                                        const format = `${dateTime()}:${v.SECONDS}${v.MILLISECONDS}`;
+                                it(`${method} (with milliseconds)`, () => {
+                                    const start = firstOfMonth();
+                                    const end = shift(start, { days: 10 });
+                                    const format = `${dateTime()}:${v.SECONDS}${v.MILLISECONDS}`;
 
-                                        expect(call(start, end, { milliseconds: true })).toBe(
-                                            `${adapter.format(start, format)}${v.LONG_DASH}${adapter.format(
-                                                end,
-                                                format
-                                            )}`
-                                        );
-                                    });
-                                }
+                                    expect(call(start, end, { milliseconds: true })).toBe(
+                                        `${adapter.format(start, format)}${v.LONG_DASH}${adapter.format(end, format)}`
+                                    );
+                                });
                             });
                         };
 
@@ -688,8 +682,7 @@ const runFormatterSuite = <D>(
                             'short',
                             'rangeShortDateTime',
                             () => v.SHORT_DATE,
-                            (s, e, o) => formatter.rangeShortDateTime(s, e, o),
-                            true
+                            (s, e, o) => formatter.rangeShortDateTime(s, e, o)
                         );
                         closedDate(
                             'long',
@@ -771,8 +764,7 @@ const runFormatterSuite = <D>(
                             'middle',
                             'rangeMiddleDateTime',
                             () => v.DATE,
-                            (s, e, o) => formatter.rangeMiddleDateTime(s, e, o),
-                            false
+                            (s, e, o) => formatter.rangeMiddleDateTime(s, e, o)
                         );
                     });
 
@@ -1083,18 +1075,20 @@ const runFormatterSuite = <D>(
                     });
 
                     describe('Text short format', () => {
-                        it('seconds and milliseconds', () => {
-                            const seconds = 23;
-                            const milliseconds = 45;
-                            const start = before({ seconds, milliseconds });
-                            const shown = String(milliseconds).padStart(3, '0');
+                        // 45 renders through the zero-padding branch, 111 through the three-digit one
+                        for (const milliseconds of [45, 111]) {
+                            it(`seconds and milliseconds: ${milliseconds}`, () => {
+                                const seconds = 23;
+                                const start = before({ seconds, milliseconds });
+                                const shown = String(milliseconds).padStart(3, '0');
 
-                            expect(formatter.durationShort(start, anchor(), ['seconds', 'milliseconds'])).toBe(
-                                `${seconds}${d.short.millisecondsSeparator}${shown} ${
-                                    d.short.units.seconds[pr.select(seconds)]
-                                }`
-                            );
-                        });
+                                expect(formatter.durationShort(start, anchor(), ['seconds', 'milliseconds'])).toBe(
+                                    `${seconds}${d.short.millisecondsSeparator}${shown} ${
+                                        d.short.units.seconds[pr.select(seconds)]
+                                    }`
+                                );
+                            });
+                        }
 
                         textFormat('short', (start, end, units, fraction) =>
                             formatter.durationShort(start, end, units, fraction)
@@ -1185,9 +1179,8 @@ const runFormatterSuite = <D>(
 
 runFormatterSuite('LuxonDateAdapter', (locale) => new LuxonDateAdapter(locale));
 /*
- * Moment is the one adapter that does not agree with the others, and only ever about durations —
- * every date and range format matches luxon exactly. Its snapshot records what it does today so a
- * change shows up, but four of the differences it captures are defects rather than choices:
+ * Moment is the one adapter that does not agree with the others. Its snapshot records what it does
+ * today so a change shows up; the differences it captures are these. Only the last is a choice:
  *
  *  - `durationObjectFromDates` measures with `moment.duration(end.diff(start))`, whose year and month
  *    are fixed averages (365.25 and 30.436875 days), so a whole calendar year floors to zero. The
@@ -1199,11 +1192,14 @@ runFormatterSuite('LuxonDateAdapter', (locale) => new LuxonDateAdapter(locale));
  *    luxon renders as "1 year 1 month" comes out as "1 year 1 month 4 days 5 hours 2 minutes
  *    25 seconds".
  *  - fractions are not rounded to half steps, so "1 y" becomes "1.0957377989167014 y".
+ *  - moment's own ru-RU locale data abbreviates months with a trailing period, so short dates read
+ *    "7 мар. 2015" where the other three adapters read "7 мар 2015". That one comes from moment, not
+ *    from this repo's locale config, and is the only non-duration difference.
  */
 runFormatterSuite('MomentDateAdapter', (locale) => new MomentDateAdapter(locale), {
     approximateDurationUnits: ['years', 'months']
 });
-// The native adapter builds dates in the ambient zone unless told otherwise, and formats from its own
-// config rather than Intl, so UTC is what keeps its output pinned.
+// `jest.preset.js` pins TZ=UTC for the whole workspace, so the ambient zone is already fixed; asking
+// the native adapter for UTC explicitly keeps this suite pinned even if it is ever run without that.
 runFormatterSuite('NativeDateAdapter', (locale) => new NativeDateAdapter(locale, { useUtc: true }));
 runFormatterSuite('InternationalizedDateAdapter', (locale) => new InternationalizedDateAdapter(locale));
