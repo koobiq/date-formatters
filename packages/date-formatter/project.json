@@ -37,6 +37,15 @@
         "test": {
             "executor": "@nx/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "inputs": [
+                "default",
+                "^default",
+                "{workspaceRoot}/jest.preset.js",
+                "{workspaceRoot}/packages/internationalized-date-adapter/src/**/*",
+                "{workspaceRoot}/packages/luxon-date-adapter/src/**/*",
+                "{workspaceRoot}/packages/moment-date-adapter/src/**/*",
+                "{workspaceRoot}/packages/native-date-adapter/src/**/*"
+            ],
             "options": {
                 "jestConfig": "packages/date-formatter/jest.config.js"
             }
