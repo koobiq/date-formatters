@@ -1,0 +1,449 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`DateFormatter with InternationalizedDateAdapter en-US renders every format 1`] = `
+{
+  "absolute": {
+    "longDate": "June 15",
+    "longDateOtherYear": "March 7, 2015",
+    "longDateTime": "June 15, 00:00",
+    "longDateTimeWithSeconds": "March 7, 2015, 09:05:03",
+    "shortDate": "Jun 15",
+    "shortDateCurrentYear": "Jun 15, 2026",
+    "shortDateOtherYear": "Mar 7, 2015",
+    "shortDateTime": "Jun 15, 00:00",
+    "shortDateTimeWithMilliseconds": "Mar 7, 2015, 09:05:03.045",
+  },
+  "closedRange": {
+    "longDate": "June 1–11",
+    "longDateTime": "From June 1, 08:30 to June 11, 08:30",
+    "longDateTimeSameDay": "June 15, from 00:00 to 00:01",
+    "middleDateTime": "June 1, 08:30 – June 11, 08:30",
+    "middleDateTimeSameDay": "00:00–00:01, June 15",
+    "shortDateOtherYear": "Mar 7, 2015 – Jun 15, 2026",
+    "shortDateSameMonth": "Jun 1–11",
+    "shortDateTime": "Jun 1, 08:30 – Jun 11, 08:30",
+    "shortDateTimeSameDay": "00:00–00:01, Jun 15",
+  },
+  "duration": {
+    "long": "1 year 1 month",
+    "longDaysHours": "400 days 5 hours",
+    "short": "1 y 1 mo",
+    "shortYearsFraction": "1 y",
+    "shortest": "9605:02:25",
+    "shortestWithMilliseconds": "9605:02:25,125",
+  },
+  "openedRange": {
+    "longDateFrom": "From June 15",
+    "longDateTimeUntil": "Until June 15, 00:00",
+    "shortDateFrom": "From Jun 15",
+    "shortDateTimeFrom": "From Jun 15, 00:00",
+    "shortDateUntil": "Until Jun 15",
+    "shortDateUntilOtherYear": "Until Mar 7 2015",
+  },
+  "relativeLongDate": {
+    "farPast": "March 7, 2015",
+    "withMilliseconds": "Today, 00:00:00.000",
+    "yesterday": "Yesterday, 00:00",
+  },
+  "relativeShortDate": {
+    "farPast": "Mar 7, 2015",
+    "today": "Today, 00:00",
+    "tomorrow": "Tomorrow, 00:00",
+    "withMilliseconds": "Today, 00:00:00.000",
+    "withSeconds": "Today, 00:00:00",
+    "yesterday": "Yesterday, 00:00",
+  },
+}
+`;
+
+exports[`DateFormatter with InternationalizedDateAdapter ru-RU renders every format 1`] = `
+{
+  "absolute": {
+    "longDate": "15 июня",
+    "longDateOtherYear": "7 марта 2015",
+    "longDateTime": "15 июня, 00:00",
+    "longDateTimeWithSeconds": "7 марта 2015, 09:05:03",
+    "shortDate": "15 июня",
+    "shortDateCurrentYear": "15 июня 2026",
+    "shortDateOtherYear": "7 мар 2015",
+    "shortDateTime": "15 июня, 00:00",
+    "shortDateTimeWithMilliseconds": "7 мар 2015, 09:05:03,045",
+  },
+  "closedRange": {
+    "longDate": "1–11 июня",
+    "longDateTime": "С 1 июня, 08:30 по 11 июня, 08:30",
+    "longDateTimeSameDay": "15 июня, с 00:00 по 00:01",
+    "middleDateTime": "1 июня, 08:30 — 11 июня, 08:30",
+    "middleDateTimeSameDay": "00:00–00:01, 15 июня",
+    "shortDateOtherYear": "7 мар 2015 — 15 июня 2026",
+    "shortDateSameMonth": "1–11 июня",
+    "shortDateTime": "1 июня, 08:30 — 11 июня, 08:30",
+    "shortDateTimeSameDay": "00:00–00:01, 15 июня",
+  },
+  "duration": {
+    "long": "1 год и 1 месяц",
+    "longDaysHours": "400 дней и 5 часов",
+    "short": "1 г 1 мес",
+    "shortYearsFraction": "1 г",
+    "shortest": "9605:02:25",
+    "shortestWithMilliseconds": "9605:02:25,125",
+  },
+  "openedRange": {
+    "longDateFrom": "С 15 июня",
+    "longDateTimeUntil": "По 15 июня, 00:00",
+    "shortDateFrom": "С 15 июня",
+    "shortDateTimeFrom": "С 15 июня, 00:00",
+    "shortDateUntil": "По 15 июня",
+    "shortDateUntilOtherYear": "По 7 мар 2015",
+  },
+  "relativeLongDate": {
+    "farPast": "7 марта 2015",
+    "withMilliseconds": "Сегодня, 00:00:00,000",
+    "yesterday": "Вчера, 00:00",
+  },
+  "relativeShortDate": {
+    "farPast": "7 мар 2015",
+    "today": "Сегодня, 00:00",
+    "tomorrow": "Завтра, 00:00",
+    "withMilliseconds": "Сегодня, 00:00:00,000",
+    "withSeconds": "Сегодня, 00:00:00",
+    "yesterday": "Вчера, 00:00",
+  },
+}
+`;
+
+exports[`DateFormatter with LuxonDateAdapter en-US renders every format 1`] = `
+{
+  "absolute": {
+    "longDate": "June 15",
+    "longDateOtherYear": "March 7, 2015",
+    "longDateTime": "June 15, 00:00",
+    "longDateTimeWithSeconds": "March 7, 2015, 09:05:03",
+    "shortDate": "Jun 15",
+    "shortDateCurrentYear": "Jun 15, 2026",
+    "shortDateOtherYear": "Mar 7, 2015",
+    "shortDateTime": "Jun 15, 00:00",
+    "shortDateTimeWithMilliseconds": "Mar 7, 2015, 09:05:03.045",
+  },
+  "closedRange": {
+    "longDate": "June 1–11",
+    "longDateTime": "From June 1, 08:30 to June 11, 08:30",
+    "longDateTimeSameDay": "June 15, from 00:00 to 00:01",
+    "middleDateTime": "June 1, 08:30 – June 11, 08:30",
+    "middleDateTimeSameDay": "00:00–00:01, June 15",
+    "shortDateOtherYear": "Mar 7, 2015 – Jun 15, 2026",
+    "shortDateSameMonth": "Jun 1–11",
+    "shortDateTime": "Jun 1, 08:30 – Jun 11, 08:30",
+    "shortDateTimeSameDay": "00:00–00:01, Jun 15",
+  },
+  "duration": {
+    "long": "1 year 1 month",
+    "longDaysHours": "400 days 5 hours",
+    "short": "1 y 1 mo",
+    "shortYearsFraction": "1 y",
+    "shortest": "9605:02:25",
+    "shortestWithMilliseconds": "9605:02:25,125",
+  },
+  "openedRange": {
+    "longDateFrom": "From June 15",
+    "longDateTimeUntil": "Until June 15, 00:00",
+    "shortDateFrom": "From Jun 15",
+    "shortDateTimeFrom": "From Jun 15, 00:00",
+    "shortDateUntil": "Until Jun 15",
+    "shortDateUntilOtherYear": "Until Mar 7 2015",
+  },
+  "relativeLongDate": {
+    "farPast": "March 7, 2015",
+    "withMilliseconds": "Today, 00:00:00.000",
+    "yesterday": "Yesterday, 00:00",
+  },
+  "relativeShortDate": {
+    "farPast": "Mar 7, 2015",
+    "today": "Today, 00:00",
+    "tomorrow": "Tomorrow, 00:00",
+    "withMilliseconds": "Today, 00:00:00.000",
+    "withSeconds": "Today, 00:00:00",
+    "yesterday": "Yesterday, 00:00",
+  },
+}
+`;
+
+exports[`DateFormatter with LuxonDateAdapter ru-RU renders every format 1`] = `
+{
+  "absolute": {
+    "longDate": "15 июня",
+    "longDateOtherYear": "7 марта 2015",
+    "longDateTime": "15 июня, 00:00",
+    "longDateTimeWithSeconds": "7 марта 2015, 09:05:03",
+    "shortDate": "15 июня",
+    "shortDateCurrentYear": "15 июня 2026",
+    "shortDateOtherYear": "7 мар 2015",
+    "shortDateTime": "15 июня, 00:00",
+    "shortDateTimeWithMilliseconds": "7 мар 2015, 09:05:03,045",
+  },
+  "closedRange": {
+    "longDate": "1–11 июня",
+    "longDateTime": "С 1 июня, 08:30 по 11 июня, 08:30",
+    "longDateTimeSameDay": "15 июня, с 00:00 по 00:01",
+    "middleDateTime": "1 июня, 08:30 — 11 июня, 08:30",
+    "middleDateTimeSameDay": "00:00–00:01, 15 июня",
+    "shortDateOtherYear": "7 мар 2015 — 15 июня 2026",
+    "shortDateSameMonth": "1–11 июня",
+    "shortDateTime": "1 июня, 08:30 — 11 июня, 08:30",
+    "shortDateTimeSameDay": "00:00–00:01, 15 июня",
+  },
+  "duration": {
+    "long": "1 год и 1 месяц",
+    "longDaysHours": "400 дней и 5 часов",
+    "short": "1 г 1 мес",
+    "shortYearsFraction": "1 г",
+    "shortest": "9605:02:25",
+    "shortestWithMilliseconds": "9605:02:25,125",
+  },
+  "openedRange": {
+    "longDateFrom": "С 15 июня",
+    "longDateTimeUntil": "По 15 июня, 00:00",
+    "shortDateFrom": "С 15 июня",
+    "shortDateTimeFrom": "С 15 июня, 00:00",
+    "shortDateUntil": "По 15 июня",
+    "shortDateUntilOtherYear": "По 7 мар 2015",
+  },
+  "relativeLongDate": {
+    "farPast": "7 марта 2015",
+    "withMilliseconds": "Сегодня, 00:00:00,000",
+    "yesterday": "Вчера, 00:00",
+  },
+  "relativeShortDate": {
+    "farPast": "7 мар 2015",
+    "today": "Сегодня, 00:00",
+    "tomorrow": "Завтра, 00:00",
+    "withMilliseconds": "Сегодня, 00:00:00,000",
+    "withSeconds": "Сегодня, 00:00:00",
+    "yesterday": "Вчера, 00:00",
+  },
+}
+`;
+
+exports[`DateFormatter with MomentDateAdapter en-US renders every format 1`] = `
+{
+  "absolute": {
+    "longDate": "June 15",
+    "longDateOtherYear": "March 7, 2015",
+    "longDateTime": "June 15, 00:00",
+    "longDateTimeWithSeconds": "March 7, 2015, 09:05:03",
+    "shortDate": "Jun 15",
+    "shortDateCurrentYear": "Jun 15, 2026",
+    "shortDateOtherYear": "Mar 7, 2015",
+    "shortDateTime": "Jun 15, 00:00",
+    "shortDateTimeWithMilliseconds": "Mar 7, 2015, 09:05:03.045",
+  },
+  "closedRange": {
+    "longDate": "June 1–11",
+    "longDateTime": "From June 1, 08:30 to June 11, 08:30",
+    "longDateTimeSameDay": "June 15, from 00:00 to 00:01",
+    "middleDateTime": "June 1, 08:30 – June 11, 08:30",
+    "middleDateTimeSameDay": "00:00–00:01, June 15",
+    "shortDateOtherYear": "Mar 7, 2015 – Jun 15, 2026",
+    "shortDateSameMonth": "Jun 1–11",
+    "shortDateTime": "Jun 1, 08:30 – Jun 11, 08:30",
+    "shortDateTimeSameDay": "00:00–00:01, Jun 15",
+  },
+  "duration": {
+    "long": "1 year 1 month 4 days 5 hours 2 minutes 25 seconds",
+    "longDaysHours": "400 days 5 hours",
+    "short": "1 y 1 mo 4 d 5 h 2 min 25 s",
+    "shortYearsFraction": "1.0957377989167014 y",
+    "shortest": "5:02:25",
+    "shortestWithMilliseconds": "5:02:25,125",
+  },
+  "openedRange": {
+    "longDateFrom": "From June 15",
+    "longDateTimeUntil": "Until June 15, 00:00",
+    "shortDateFrom": "From Jun 15",
+    "shortDateTimeFrom": "From Jun 15, 00:00",
+    "shortDateUntil": "Until Jun 15",
+    "shortDateUntilOtherYear": "Until Mar 7 2015",
+  },
+  "relativeLongDate": {
+    "farPast": "March 7, 2015",
+    "withMilliseconds": "Today, 00:00:00.000",
+    "yesterday": "Yesterday, 00:00",
+  },
+  "relativeShortDate": {
+    "farPast": "Mar 7, 2015",
+    "today": "Today, 00:00",
+    "tomorrow": "Tomorrow, 00:00",
+    "withMilliseconds": "Today, 00:00:00.000",
+    "withSeconds": "Today, 00:00:00",
+    "yesterday": "Yesterday, 00:00",
+  },
+}
+`;
+
+exports[`DateFormatter with MomentDateAdapter ru-RU renders every format 1`] = `
+{
+  "absolute": {
+    "longDate": "15 июня",
+    "longDateOtherYear": "7 марта 2015",
+    "longDateTime": "15 июня, 00:00",
+    "longDateTimeWithSeconds": "7 марта 2015, 09:05:03",
+    "shortDate": "15 июня",
+    "shortDateCurrentYear": "15 июня 2026",
+    "shortDateOtherYear": "7 мар. 2015",
+    "shortDateTime": "15 июня, 00:00",
+    "shortDateTimeWithMilliseconds": "7 мар. 2015, 09:05:03,045",
+  },
+  "closedRange": {
+    "longDate": "1–11 июня",
+    "longDateTime": "С 1 июня, 08:30 по 11 июня, 08:30",
+    "longDateTimeSameDay": "15 июня, с 00:00 по 00:01",
+    "middleDateTime": "1 июня, 08:30 — 11 июня, 08:30",
+    "middleDateTimeSameDay": "00:00–00:01, 15 июня",
+    "shortDateOtherYear": "7 мар. 2015 — 15 июня 2026",
+    "shortDateSameMonth": "1–11 июня",
+    "shortDateTime": "1 июня, 08:30 — 11 июня, 08:30",
+    "shortDateTimeSameDay": "00:00–00:01, 15 июня",
+  },
+  "duration": {
+    "long": "1 год 1 месяц 4 дня 5 часов 2 минуты и 25 секунд",
+    "longDaysHours": "400 дней и 5 часов",
+    "short": "1 г 1 мес 4 д 5 ч 2 мин 25 с",
+    "shortYearsFraction": "1,096 г",
+    "shortest": "5:02:25",
+    "shortestWithMilliseconds": "5:02:25,125",
+  },
+  "openedRange": {
+    "longDateFrom": "С 15 июня",
+    "longDateTimeUntil": "По 15 июня, 00:00",
+    "shortDateFrom": "С 15 июня",
+    "shortDateTimeFrom": "С 15 июня, 00:00",
+    "shortDateUntil": "По 15 июня",
+    "shortDateUntilOtherYear": "По 7 мар. 2015",
+  },
+  "relativeLongDate": {
+    "farPast": "7 марта 2015",
+    "withMilliseconds": "Сегодня, 00:00:00,000",
+    "yesterday": "Вчера, 00:00",
+  },
+  "relativeShortDate": {
+    "farPast": "7 мар. 2015",
+    "today": "Сегодня, 00:00",
+    "tomorrow": "Завтра, 00:00",
+    "withMilliseconds": "Сегодня, 00:00:00,000",
+    "withSeconds": "Сегодня, 00:00:00",
+    "yesterday": "Вчера, 00:00",
+  },
+}
+`;
+
+exports[`DateFormatter with NativeDateAdapter en-US renders every format 1`] = `
+{
+  "absolute": {
+    "longDate": "June 15",
+    "longDateOtherYear": "March 7, 2015",
+    "longDateTime": "June 15, 00:00",
+    "longDateTimeWithSeconds": "March 7, 2015, 09:05:03",
+    "shortDate": "Jun 15",
+    "shortDateCurrentYear": "Jun 15, 2026",
+    "shortDateOtherYear": "Mar 7, 2015",
+    "shortDateTime": "Jun 15, 00:00",
+    "shortDateTimeWithMilliseconds": "Mar 7, 2015, 09:05:03.045",
+  },
+  "closedRange": {
+    "longDate": "June 1–11",
+    "longDateTime": "From June 1, 08:30 to June 11, 08:30",
+    "longDateTimeSameDay": "June 15, from 00:00 to 00:01",
+    "middleDateTime": "June 1, 08:30 – June 11, 08:30",
+    "middleDateTimeSameDay": "00:00–00:01, June 15",
+    "shortDateOtherYear": "Mar 7, 2015 – Jun 15, 2026",
+    "shortDateSameMonth": "Jun 1–11",
+    "shortDateTime": "Jun 1, 08:30 – Jun 11, 08:30",
+    "shortDateTimeSameDay": "00:00–00:01, Jun 15",
+  },
+  "duration": {
+    "long": "1 year 1 month",
+    "longDaysHours": "400 days 5 hours",
+    "short": "1 y 1 mo",
+    "shortYearsFraction": "1 y",
+    "shortest": "9605:02:25",
+    "shortestWithMilliseconds": "9605:02:25,125",
+  },
+  "openedRange": {
+    "longDateFrom": "From June 15",
+    "longDateTimeUntil": "Until June 15, 00:00",
+    "shortDateFrom": "From Jun 15",
+    "shortDateTimeFrom": "From Jun 15, 00:00",
+    "shortDateUntil": "Until Jun 15",
+    "shortDateUntilOtherYear": "Until Mar 7 2015",
+  },
+  "relativeLongDate": {
+    "farPast": "March 7, 2015",
+    "withMilliseconds": "Today, 00:00:00.000",
+    "yesterday": "Yesterday, 00:00",
+  },
+  "relativeShortDate": {
+    "farPast": "Mar 7, 2015",
+    "today": "Today, 00:00",
+    "tomorrow": "Tomorrow, 00:00",
+    "withMilliseconds": "Today, 00:00:00.000",
+    "withSeconds": "Today, 00:00:00",
+    "yesterday": "Yesterday, 00:00",
+  },
+}
+`;
+
+exports[`DateFormatter with NativeDateAdapter ru-RU renders every format 1`] = `
+{
+  "absolute": {
+    "longDate": "15 июня",
+    "longDateOtherYear": "7 марта 2015",
+    "longDateTime": "15 июня, 00:00",
+    "longDateTimeWithSeconds": "7 марта 2015, 09:05:03",
+    "shortDate": "15 июня",
+    "shortDateCurrentYear": "15 июня 2026",
+    "shortDateOtherYear": "7 мар 2015",
+    "shortDateTime": "15 июня, 00:00",
+    "shortDateTimeWithMilliseconds": "7 мар 2015, 09:05:03,045",
+  },
+  "closedRange": {
+    "longDate": "1–11 июня",
+    "longDateTime": "С 1 июня, 08:30 по 11 июня, 08:30",
+    "longDateTimeSameDay": "15 июня, с 00:00 по 00:01",
+    "middleDateTime": "1 июня, 08:30 — 11 июня, 08:30",
+    "middleDateTimeSameDay": "00:00–00:01, 15 июня",
+    "shortDateOtherYear": "7 мар 2015 — 15 июня 2026",
+    "shortDateSameMonth": "1–11 июня",
+    "shortDateTime": "1 июня, 08:30 — 11 июня, 08:30",
+    "shortDateTimeSameDay": "00:00–00:01, 15 июня",
+  },
+  "duration": {
+    "long": "1 год и 1 месяц",
+    "longDaysHours": "400 дней и 5 часов",
+    "short": "1 г 1 мес",
+    "shortYearsFraction": "1 г",
+    "shortest": "9605:02:25",
+    "shortestWithMilliseconds": "9605:02:25,125",
+  },
+  "openedRange": {
+    "longDateFrom": "С 15 июня",
+    "longDateTimeUntil": "По 15 июня, 00:00",
+    "shortDateFrom": "С 15 июня",
+    "shortDateTimeFrom": "С 15 июня, 00:00",
+    "shortDateUntil": "По 15 июня",
+    "shortDateUntilOtherYear": "По 7 мар 2015",
+  },
+  "relativeLongDate": {
+    "farPast": "7 марта 2015",
+    "withMilliseconds": "Сегодня, 00:00:00,000",
+    "yesterday": "Вчера, 00:00",
+  },
+  "relativeShortDate": {
+    "farPast": "7 мар 2015",
+    "today": "Сегодня, 00:00",
+    "tomorrow": "Завтра, 00:00",
+    "withMilliseconds": "Сегодня, 00:00:00,000",
+    "withSeconds": "Сегодня, 00:00:00",
+    "yesterday": "Вчера, 00:00",
+  },
+}
+`;

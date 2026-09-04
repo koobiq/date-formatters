@@ -1,13 +1,10 @@
 import { DateUnit, DurationObjectUnits } from '@koobiq/date-adapter';
-import { DateFormatter } from '@koobiq/date-formatter';
 
 import { NativeDateAdapter } from './adapter';
 
-const nbsp = ' ';
-
-// Every assertion below runs the adapter in UTC mode. Jest does not pin `TZ`, so a local-time adapter
-// would make the snapshots and the ISO expectations depend on the machine the suite runs on. Local-time
-// behaviour has its own describe at the bottom.
+// Every assertion below runs the adapter in UTC mode, so the snapshots and the ISO expectations pin
+// the adapter's own behaviour rather than the ambient zone. Local-time behaviour has its own describe
+// at the bottom.
 const utc = (year: number, month = 0, day = 1, hours = 0, minutes = 0, seconds = 0, milliseconds = 0): Date =>
     new Date(Date.UTC(year, month, day, hours, minutes, seconds, milliseconds));
 
@@ -576,24 +573,6 @@ describe('NativeDateAdapter', () => {
 
         it('should throw on an invalid date', () => {
             expect(() => adapter.format(adapter.invalid(), 'yyyy')).toThrow('Cannot format invalid date');
-        });
-    });
-
-    describe('integration with DateFormatter', () => {
-        it('should render an absolute long date the same way the other adapters do', () => {
-            const value = adapter.createDateTime(2025, 2, 17, 12, 51, 13, 299);
-
-            expect(new DateFormatter(adapter, 'en-US').absoluteLongDate(value)).toBe(`March${nbsp}17, 2025`);
-
-            adapter.setLocale('ru-RU');
-            expect(new DateFormatter(adapter, 'ru-RU').absoluteLongDate(value)).toBe(`17${nbsp}марта 2025`);
-        });
-
-        it('should render a duration', () => {
-            const start = adapter.createDateTime(2024, 0, 15, 10, 0, 0, 0);
-            const end = adapter.createDateTime(2024, 0, 16, 12, 30, 15, 0);
-
-            expect(new DateFormatter(adapter, 'en-US').durationShortest(start, end)).toBe('26:30:15');
         });
     });
 

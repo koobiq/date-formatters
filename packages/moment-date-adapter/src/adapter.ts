@@ -71,7 +71,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
         this.setLocale(localeName || moment.locale());
     }
 
-    setLocale(localeName: string): void {
+    override setLocale(localeName: string): void {
         /* change standard locale to moment-specific for farsi to output localized date */
         super.setLocale(standardLangToMomentMap[localeName] || localeName);
 
@@ -294,7 +294,7 @@ export class MomentDateAdapter extends DateAdapter<Moment> {
     }
 
     /** https://www.ietf.org/rfc/rfc3339.txt */
-    deserialize(value: any): Moment | null {
+    override deserialize(value: any): Moment | null {
         let date;
         if (value instanceof Date) {
             date = this.createMoment(value).locale(this.locale);

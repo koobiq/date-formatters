@@ -50,7 +50,8 @@ Three layers, one npm package each, all released together on a single version:
 2. **Four adapters** — `luxon-`, `moment-`, `native-`, `internationalized-date-adapter`. Each binds
    `DateAdapter<D>` to a concrete date type (`DateTime`, `Moment`, `Date`, `CalendarDateTime`).
 3. **`@koobiq/date-formatter`** — `DateFormatter<D>` plus per-locale ICU MessageFormat templates. It
-   never imports a date library; it only calls the adapter it was constructed with.
+   never imports a date library; it only calls the adapter it was constructed with. Its _specs_ do
+   import all four adapters (see below), which is why they type-check those packages' sources.
 
 ### How formatting actually works
 
@@ -109,8 +110,12 @@ templates and the luxon / moment / native adapters ship `en-US`, `ru-RU`, `es-LA
     intentional, regenerate them and include the snapshot diff in the PR — `CONTRIBUTING.md` treats an
     unaccompanied formatting change as unreviewable.
 -   `date-adapter` has no specs (`passWithNoTests: true` in `nx.json`).
--   The native and internationalized adapter specs import `@koobiq/date-formatter` and assert through it
-    — those are integration tests over the token contract described above, not unit tests of the adapter.
+-   The adapter specs are unit tests of the adapter only. Everything that asserts through `DateFormatter`
+    lives in `packages/date-formatter/src`: `formatter-locales.spec.ts` runs one parametrised suite over
+    all four adapters × `en-US`/`ru-RU`, and `formatter-formats.spec.ts` holds the per-format cases that
+    used to sit in the native and internationalized specs. That is why `date-formatter`'s `test` target
+    declares the four adapter source trees in its `inputs` — without them Nx caches it against the wrong
+    hash and replays a green run after an adapter changes.
 -   `**/*.spec.ts` is ignored by the root ESLint config, so lint rules do not apply to test files.
 
 ## TypeScript and build
