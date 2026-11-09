@@ -147,5 +147,17 @@ describe('DateFormatter', () => {
                 'Until March 16, 11:48:15.547'
             );
         });
+
+        it('ignores sentenceStart in locales without letter case', () => {
+            for (const locale of ['zh-CN', 'fa-IR']) {
+                const adapter = new LuxonDateAdapter(locale);
+                const formatter = new DateFormatter(adapter, locale);
+                const date = adapter.addCalendarUnits(adapter.today(), { days: -1 });
+
+                expect(formatter.relativeShortDate(date, { sentenceStart: false })).toBe(
+                    formatter.relativeShortDate(date)
+                );
+            }
+        });
     });
 });

@@ -421,6 +421,37 @@ describe('InternationalizedDateAdapter format matrix', () => {
                 expect(formatter.relativeShortDate(value)).toBe('Mar 19, 2027');
             });
         });
+
+        it('lowercases the relative word mid-sentence', () => {
+            const { formatter } = createFormatter();
+            const yesterday = new CalendarDateTime(2026, 3, 16, 12, 51, 13, 311);
+            const tomorrow = new CalendarDateTime(2026, 3, 18, 13, 51, 13, 311);
+
+            expect(formatter.relativeLongDateTime(yesterday, { sentenceStart: false })).toBe('yesterday, 12:51');
+            expect(formatter.relativeLongDateTime(fixedToday, { sentenceStart: false })).toBe('today, 11:51');
+            expect(formatter.relativeLongDateTime(tomorrow, { sentenceStart: false })).toBe('tomorrow, 13:51');
+        });
+
+        it('keeps the date branch unchanged mid-sentence', () => {
+            const { formatter } = createFormatter();
+            const beforeYesterdayOtherYear = new CalendarDateTime(2025, 3, 15, 12, 51, 13, 311);
+
+            expect(formatter.relativeLongDate(beforeYesterdayOtherYear, { sentenceStart: false })).toBe(
+                'March 15, 2025'
+            );
+            expect(formatter.relativeShortDateTime(beforeYesterdayOtherYear, { sentenceStart: false })).toBe(
+                'Mar 15, 2025'
+            );
+        });
+
+        it('combines mid-sentence with seconds', () => {
+            const { formatter } = createFormatter();
+            const yesterday = new CalendarDateTime(2026, 3, 16, 12, 51, 13, 311);
+
+            expect(formatter.relativeLongDateTime(yesterday, { seconds: true, sentenceStart: false })).toBe(
+                'yesterday, 12:51:13'
+            );
+        });
     });
 
     describe('date range', () => {
