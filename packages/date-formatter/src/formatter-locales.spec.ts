@@ -292,6 +292,25 @@ const runFormatterSuite = <D>(
                                 `${w.today}, ${adapter.format(today, `${v.TIME}:${v.SECONDS}`)}`
                             );
                         });
+
+                        it('lowercases the word mid-sentence', () => {
+                            for (const date of acrossDay(shift(today, { days: -1 }))) {
+                                expect(formatter.relativeShortDate(date, { sentenceStart: false })).toBe(
+                                    `${w.yesterday.charAt(0).toLowerCase()}${w.yesterday.slice(1)}, ${adapter.format(
+                                        date,
+                                        v.TIME
+                                    )}`
+                                );
+                            }
+                        });
+
+                        it('leaves the date branch unchanged mid-sentence', () => {
+                            const date = shift(today, { days: -3 });
+
+                            expect(formatter.relativeShortDate(date, { sentenceStart: false })).toBe(
+                                formatter.relativeShortDate(date)
+                            );
+                        });
                     });
 
                     describe('Relative long (relativeLongDate method)', () => {
@@ -364,6 +383,25 @@ const runFormatterSuite = <D>(
                         it('with seconds', () => {
                             expect(formatter.relativeLongDateTime(today, { seconds: true })).toBe(
                                 `${w.today}, ${adapter.format(today, `${v.TIME}:${v.SECONDS}`)}`
+                            );
+                        });
+
+                        it('lowercases the word mid-sentence', () => {
+                            for (const date of acrossDay(shift(today, { days: -1 }))) {
+                                expect(formatter.relativeLongDate(date, { sentenceStart: false })).toBe(
+                                    `${w.yesterday.charAt(0).toLowerCase()}${w.yesterday.slice(1)}, ${adapter.format(
+                                        date,
+                                        v.TIME
+                                    )}`
+                                );
+                            }
+                        });
+
+                        it('leaves the date branch unchanged mid-sentence', () => {
+                            const date = shift(today, { days: -3 });
+
+                            expect(formatter.relativeLongDate(date, { sentenceStart: false })).toBe(
+                                formatter.relativeLongDate(date)
                             );
                         });
                     });

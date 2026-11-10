@@ -57,6 +57,11 @@ export interface DateTimeOptions {
     seconds?: boolean;
     milliseconds?: boolean;
     currYear?: boolean;
+    /**
+     * Relative formats only: whether the formatted value starts a sentence. Pass `false` when the date
+     * sits mid-sentence to render the relative word lowercase. Defaults to `true`.
+     */
+    sentenceStart?: boolean;
 }
 
 export interface FormatterConfig {
@@ -146,9 +151,16 @@ export class DateFormatter<D> {
      * @param template - template
      * @param seconds - use seconds
      * @param milliseconds - use milliseconds
+     * @param sentenceStart - whether the formatted value starts a sentence
      * @returns relative date by template
      */
-    relativeDate(date: D, template: FormatterRelativeTemplate, seconds = false, milliseconds = false): string {
+    relativeDate(
+        date: D,
+        template: FormatterRelativeTemplate,
+        seconds = false,
+        milliseconds = false,
+        sentenceStart = true
+    ): string {
         if (!this.adapter.isDateInstance(date)) {
             throw new Error(this.invalidDateErrorText);
         }
@@ -160,14 +172,19 @@ export class DateFormatter<D> {
             ...template.variables
         };
 
+        let isWordBranch = false;
+
         if (this.isBeforeYesterday(date)) {
             newTemplate = template.BEFORE_YESTERDAY;
         } else if (this.isYesterday(date)) {
             newTemplate = template.YESTERDAY;
+            isWordBranch = true;
         } else if (this.isToday(date)) {
             newTemplate = template.TODAY;
+            isWordBranch = true;
         } else if (this.isTomorrow(date)) {
             newTemplate = template.TOMORROW;
+            isWordBranch = true;
         } else if (this.isAfterTomorrow(date)) {
             newTemplate = template.AFTER_TOMORROW;
         }
@@ -177,23 +194,31 @@ export class DateFormatter<D> {
         variables.SHOW_SECONDS = seconds ? 'yes' : 'no';
         variables.SHOW_MILLISECONDS = milliseconds ? 'yes' : 'no';
 
-        return this.messageFormat.compile(newTemplate as string)(variables);
+        const result = this.messageFormat.compile(newTemplate as string)(variables);
+
+        if (!sentenceStart && isWordBranch) {
+            return result.charAt(0).toLowerCase() + result.slice(1);
+        }
+
+        return result;
     }
 
     /**
      * @param date - date
+     * @param options - DateTimeOptions
      * @returns relative date in short format
      */
-    relativeShortDate(date: D): string {
-        return this.relativeDate(date, this.config.relativeTemplates.short);
+    relativeShortDate(date: D, options?: DateTimeOptions): string {
+        return this.relativeDate(date, this.config.relativeTemplates.short, false, false, options?.sentenceStart);
     }
 
     /**
      * @param date - date
+     * @param options - DateTimeOptions
      * @returns relative date in long format
      */
-    relativeLongDate(date: D): string {
-        return this.relativeDate(date, this.config.relativeTemplates.long);
+    relativeLongDate(date: D, options?: DateTimeOptions): string {
+        return this.relativeDate(date, this.config.relativeTemplates.long, false, false, options?.sentenceStart);
     }
 
     /**
@@ -202,7 +227,13 @@ export class DateFormatter<D> {
      * @returns relative date in short format with time
      */
     relativeShortDateTime(date: D, options?: DateTimeOptions): string {
-        return this.relativeDate(date, this.config.relativeTemplates.short, options?.seconds, options?.milliseconds);
+        return this.relativeDate(
+            date,
+            this.config.relativeTemplates.short,
+            options?.seconds,
+            options?.milliseconds,
+            options?.sentenceStart
+        );
     }
 
     /**
@@ -211,7 +242,13 @@ export class DateFormatter<D> {
      * @returns relative date in long format with time
      */
     relativeLongDateTime(date: D, options?: DateTimeOptions): string {
-        return this.relativeDate(date, this.config.relativeTemplates.long, options?.seconds, options?.milliseconds);
+        return this.relativeDate(
+            date,
+            this.config.relativeTemplates.long,
+            options?.seconds,
+            options?.milliseconds,
+            options?.sentenceStart
+        );
     }
 
     /**
