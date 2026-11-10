@@ -1,6 +1,6 @@
 {
     "name": "@koobiq/date-adapter",
     "description": "Datetime CDK",
-    "version": "3.5.1",
+    "version": "3.7.0",
     "license": "MIT"
 }

@@ -1,7 +1,7 @@
 {
     "name": "@koobiq/moment-date-adapter",
     "description": "Moment Date Adapter",
-    "version": "3.5.1",
+    "version": "3.7.0",
     "license": "MIT",
     "peerDependencies": {
         "@koobiq/date-adapter": "^3.0.0",
