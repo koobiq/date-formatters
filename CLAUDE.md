@@ -183,3 +183,6 @@ templates and the luxon / moment / native adapters ship `en-US`, `ru-RU`, `es-LA
   tag push is what publishes to npm via the `Publish` workflow. Maintainer-only — do not run it speculatively.
 - Dependabot deliberately holds majors for `nx`/`@nx/*`, `typescript`, `eslint`, `@koobiq/cli` and
   `@types/node`; `.github/dependabot.yml` explains each. Upgrade those by hand, together.
+- `overrides` pins `@koobiq/cli` to chalk 4: its published bundle destructures `require('chalk')`
+  directly, which breaks with ESM-only chalk 6 (Node's `require(esm)` namespace has no callable
+  `cyan`). Drop the override once a fixed `@koobiq/cli` is released.
