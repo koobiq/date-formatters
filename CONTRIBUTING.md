@@ -24,10 +24,10 @@ npm run format:check
 
 Useful during development:
 
--   `npm run build:<package>`, `npm run test:<package>`, `npm run lint:<package>` — run one
-    target for a single package, e.g. `npm run test:luxon-date-adapter`. The package is its
-    directory name under `packages/`.
--   `npm run format:write` — apply Prettier to `packages/`
+- `npm run build:<package>`, `npm run test:<package>`, `npm run lint:<package>` — run one
+  target for a single package, e.g. `npm run test:luxon-date-adapter`. The package is its
+  directory name under `packages/`.
+- `npm run format:write` — apply Prettier to `packages/`
 
 Snapshot tests cover the formatted output for every supported locale. When you deliberately
 change formatting, update the snapshots and make the snapshot diff part of the pull request so
@@ -35,11 +35,11 @@ the change is reviewable.
 
 ## Submitting a pull request
 
--   Fork the repository and create your branch from `main`.
--   Add tests for the behaviour you change; a formatting change without a snapshot or unit test
-    will not be accepted.
--   Make sure `npm run lint:all`, `npm run test:all` and `npm run build:all` pass locally.
--   Open a pull request against `main`.
+- Fork the repository and create your branch from `main`.
+- Add tests for the behaviour you change; a formatting change without a snapshot or unit test
+  will not be accepted.
+- Make sure `npm run lint:all`, `npm run test:all` and `npm run build:all` pass locally.
+- Open a pull request against `main`.
 
 Pull requests are **squash-merged**, and the pull request title becomes the commit subject. It
 must therefore follow [Conventional Commits](https://www.conventionalcommits.org) — this is
@@ -82,6 +82,6 @@ Releases are cut from `main` by a maintainer:
 npm run release:stage:commit
 ```
 
-This bumps the package versions and updates [`CHANGELOG.md`](/CHANGELOG.md). Pushing the
-resulting `<version>` tag triggers the `Publish` workflow, which builds the packages, publishes
-them to npm and creates the GitHub release.
+This bumps the package versions, updates [`CHANGELOG.md`](/CHANGELOG.md) and pushes the release commit
+together with the `<version>` tag. The tag push triggers the `Publish` workflow, which builds the
+packages, publishes them to npm and creates the GitHub release.

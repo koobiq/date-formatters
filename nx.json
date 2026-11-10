@@ -34,5 +34,6 @@
                 "buildTargetName": "build"
             }
         }
-    ]
+    ],
+    "analytics": false
 }
